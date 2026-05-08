@@ -43,10 +43,11 @@ A few things to be careful about. Not a long list — just the ones that matter:
 
 | If you need to know... | Read this |
 |---|---|
+| What's happening *right now* — in-progress work, awaiting decisions, deployed state | `01-context/state.md` |
 | Who the client is and what they do | `01-context/client-profile.md` |
 | What we're building and the timeline | `01-context/project-scope.md` |
 | What's been decided and what's still open | `01-context/decisions-log.md` |
-| What the previous session worked on | `01-context/activity-log.md` |
+| What previous sessions worked on (chronology) | `01-context/activity-log.md` |
 | Patterns, quirks, and half-formed observations | `01-context/insights.md` |
 | Positioning, voice, and messaging (if marketing-led) | `01-context/marketing-context.md` |
 | Proposals, contracts, kickoff notes | `02-deliverables/` |
@@ -54,24 +55,37 @@ A few things to be careful about. Not a long list — just the ones that matter:
 | Copy drafts, brand assets, photos | `03-assets/` |
 | Sitemap, wireframes, platform decision | `05-build/` |
 
-## Cross-Surface Continuity — Read This
+## Iterative Memory — Update As You Go
 
-{{PRINCIPAL_USER_FIRST}} works across multiple Claude surfaces: Claude.ai chats, Cowork on the desktop, and Claude Code in the terminal. Each surface is effectively a separate conversation with no shared memory. The project folder is how those surfaces stay in sync.
+{{PRINCIPAL_USER_FIRST}} works across multiple Claude surfaces: Claude.ai chats, Cowork on the desktop, Claude Code in the terminal, and Cursor in the editor. Each surface is effectively a separate conversation with no shared memory. The project folder is how those surfaces stay in sync — but only if it actually reflects reality. Memory upkeep is part of the work, not a chore at the end of it.
 
-**At the start of every work session:**
-1. Read this file (`CLAUDE.md`) to know the project.
-2. Scan the most recent 5–10 entries in `01-context/activity-log.md` to see what other surfaces have done.
-3. Check `01-context/decisions-log.md` for any open decisions or outstanding items.
+**Resume discipline — at session start, read in this order:**
+1. This file (`CLAUDE.md`) for project orientation.
+2. `01-context/state.md` for what is happening *right now*.
+3. The most recent 5 entries in `01-context/activity-log.md` for chronology.
+4. Open items in `01-context/decisions-log.md`.
 
-**At the end of every work session:**
-- Append a new entry to `01-context/activity-log.md` noting what you did, what's in progress, and what's queued.
-- If any decisions got made (closed, opened, or resolved), update `01-context/decisions-log.md`.
-- If you learned anything that isn't a formal decision (a pattern, a quirk, a gotcha), jot it in `01-context/insights.md`.
-- Keep entries short. The logs get read at the start of every future session — bloat kills the habit.
+If `state.md` is current, the chat history should be irrelevant to resumption.
 
-**If your context gets compacted mid-session:** Re-read this file (`CLAUDE.md`) and the most recent entry in `01-context/activity-log.md` before continuing. Compaction is effectively a mini session-start — you need the same orientation you'd take at the top of a fresh session.
+**Checkpoint triggers — update the appropriate file IMMEDIATELY when:**
 
-Think of `activity-log.md` as the shift-change handoff, `decisions-log.md` as the ledger, and `insights.md` as the working-memory scratchpad. Between the three, no Claude agent should ever need {{PRINCIPAL_USER_FIRST}} to re-explain context that has already been established.
+| Event | Update |
+|---|---|
+| A decision is made (closed or opened) | `decisions-log.md` |
+| A finding, quirk, gotcha, or pattern is discovered | `insights.md` |
+| A meaningful step completes (commit, deploy, gate passed, file created, milestone met) | `activity-log.md` (append) and `state.md` (refresh in-progress section) |
+| External system state changes (Lambda deployed, secret stored, schedule turned on, data mutated) | `state.md` → External Systems State |
+| You pause for human review or sign-off | `state.md` → Awaiting Human Decision |
+| You sense context-window pressure or are about to be compacted | full flush of `state.md` first, then continue |
+| {{PRINCIPAL_USER_FIRST}} says "checkpoint" or "save state" or runs `/checkpoint` | full pass: state, activity log, decisions, insights — then commit |
+
+**Commit discipline.** Commit after each significant checkpoint, not in batches at session end. The gap between *logged* and *committed* is what bites at thread-switch time. If you logged a deploy to `state.md` but haven't committed, the next surface won't see it.
+
+**Visibility.** When you update a memory file, say so out loud: "Logged decision X to decisions-log.md," "Refreshed state.md to reflect the deployed Lambda." This makes the discipline observable — {{PRINCIPAL_USER_FIRST}} can see when it's slipping and prompt you.
+
+**If your context gets compacted mid-session:** re-read `CLAUDE.md`, `01-context/state.md`, and the most recent activity-log entry before continuing. Compaction is a mini session-start.
+
+**The mental model:** `state.md` is the live dashboard. `activity-log.md` is the chronological journal. `decisions-log.md` is the ledger. `insights.md` is the working-memory scratchpad. Between the four, no Claude agent should ever need {{PRINCIPAL_USER_FIRST}} to re-explain context that was already established.
 
 ## Voice and Tone for Any Content You Draft
 

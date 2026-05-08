@@ -25,3 +25,7 @@ Desktop.ini
 
 # Local config (your personal paths + identity — never commit)
 config.local.md
+
+# Social preview source (uploaded via GitHub UI, not tracked)
+social-preview.svg
+social-preview.png

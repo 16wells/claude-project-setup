@@ -1,5 +1,7 @@
 # Placeholder Map
 
+> **Note on the iterative-memory model.** As of the 2026-05-08 upgrade, this template uses *iterative* memory upkeep instead of session-end discipline. Memory files (`state.md`, `activity-log.md`, `decisions-log.md`, `insights.md`) are updated as the work happens, gated by checkpoint triggers documented in each project's `CLAUDE.md`. The new file is `01-context/state.md` — "what is happening right now" — and there's a per-sub-project version of it under `02-deliverables/{slug}/state.md` for retainers with multiple active sub-projects. The top-level `state.md` is the meta-pointer. See `templates/client-project/.claude/skills/project-setup/SKILL.md` for the full philosophy and the three modes (greenfield, retrofit, reconcile) the skill now supports. If you are adding a new placeholder, document it here so the project-setup skill knows what to do with it.
+
 Every `{{TOKEN}}` that appears in `templates/client-project/` (and any other templates under `templates/`) is documented here. If you add a new template file or a new token, document it in this file too — otherwise the `project-setup` skill won't know what to do with it.
 
 ## How to Read This Map
@@ -15,14 +17,14 @@ Each row is one placeholder:
 
 | Token | What goes in it | Format | Files | Example |
 |---|---|---|---|---|
-| `{{CLIENT_NAME}}` | Common name for the client used in running text | Single line | `CLAUDE.md`, `README.md`, `01-context/*.md`, `02-deliverables/kickoff-notes.md`, `01-context/insights.md`, `01-context/marketing-context.md` | `Acme Futures` |
+| `{{CLIENT_NAME}}` | Common name for the client used in running text | Single line | `CLAUDE.md`, `README.md`, `01-context/*.md`, `02-deliverables/kickoff-notes.md`, `01-context/insights.md`, `01-context/marketing-context.md`, `01-context/state.md` | `Acme Futures` |
 | `{{CLIENT_LEGAL_NAME}}` | Full legal entity name | Single line | `README.md` | `Acme Futures Trading, LLC (Chicago)` |
 | `{{PROJECT_NAME}}` | Short name of the engagement | Single line | `README.md`, `01-context/project-scope.md` | `Website Redesign Project` |
 | `{{PRINCIPAL_CONTACT}}` | The human at the client the user works with | Single line | `README.md`, `CLAUDE.md`, `02-deliverables/kickoff-notes.md` | `Morgan Chen` |
 | `{{PROJECT_START}}` | When the engagement kicked off | Single line, human-readable | `README.md` | `March 2026` |
 | `{{PROJECT_STATUS}}` | One-line current state | Single line | `README.md` | `Proposal delivered, awaiting client approval` |
 | `{{COMPANY_NAME}}` | The company / practice running the engagement, with principal in parens | Single line | `README.md`, `02-deliverables/kickoff-notes.md` | `Orbit Consulting (Taylor Kim)` |
-| `{{LAST_UPDATED}}` | Date of last meaningful edit to the file | ISO date (YYYY-MM-DD) | `CLAUDE.md`, `01-context/decisions-log.md`, `01-context/activity-log.md`, `01-context/insights.md`, `01-context/marketing-context.md` | `2026-04-16` |
+| `{{LAST_UPDATED}}` | Date of last meaningful edit to the file | ISO date (YYYY-MM-DD) | `CLAUDE.md`, `01-context/decisions-log.md`, `01-context/activity-log.md`, `01-context/insights.md`, `01-context/marketing-context.md`, `01-context/state.md` | `2026-04-16` |
 
 ## Project Orientation Tokens (CLAUDE.md)
 
@@ -97,6 +99,19 @@ Each row is one placeholder:
 |---|---|---|
 | `{{INITIAL_INSIGHTS}}` | Any observations or assumptions from project setup worth capturing before active work starts. Fine to leave empty if nothing specific yet. | Bulleted list, or empty |
 
+## State Tokens (01-context/state.md)
+
+The state file is the live in-flight dashboard. Most of its content is filled iteratively as the project moves, not at scaffolding time. Only a few tokens get filled when the file is first created.
+
+| Token | What goes in it | Format |
+|---|---|---|
+| `{{ACTIVE_SUBPROJECT_SLUG}}` | Slug of the sub-project that is currently active. For greenfield with no work yet, use `none-yet`. For a single-project engagement, the project slug. For multi-sub-project retainers, the slug of whichever sub-project is in flight. | Single token (lowercase, hyphenated) |
+| `{{INITIAL_STATE_NOTE}}` | A one- or two-line note about the project's starting condition. Fine to leave empty after the first real session. Greenfield default: "Project just kicked off — no in-flight work yet. Awaiting first working session." | Short prose, or empty |
+| `{{EXTERNAL_SYSTEMS_INVENTORY_HINTS}}` | One-line hint about what external systems this engagement is expected to touch — sets the agent up to populate the inventory tables below it. Empty for advisory engagements. | Short prose, or empty |
+| `{{LAST_UPDATED_SURFACE}}` | Which surface last touched the state file. Useful for cross-surface debugging. | One of: Cowork / Claude Code / Cursor / Claude.ai chat |
+
+The deeper tables (Deployed Services, Cloud Resources, Third-Party API State, Secrets, Scheduled Jobs, Production Data State, Open Risks, Resume Notes) are filled iteratively — empty rows when the file is first created. Per-sub-project state files under `02-deliverables/{slug}/state.md` follow the same shape and are created on demand by the sub-project's first working session.
+
 ## Marketing Context Tokens (01-context/marketing-context.md)
 
 This file is **optional** — only fill and include when the engagement is marketing-led (campaigns, content production, ad strategy, rebrand). The user's call. All tokens are prefixed `PMC_` (product-marketing-context) to group them visually.
@@ -142,6 +157,8 @@ If a PMC_ section can't be filled from available material, leave the token in pl
 ## Tokens That Don't Need Filling (Generic Subfolder Readmes)
 
 The READMEs in `03-assets/`, `04-research/`, and `05-build/` are generic and do not contain placeholders. They can be used as-is for most projects. If a specific project needs custom wording (e.g., naming specific competitors in `04-research/README.md`), edit directly rather than adding new placeholders.
+
+The rule files (`.claude/rules/iterative-memory.md`, `.cursor/rules/iterative-memory.mdc`) and the `/checkpoint` command (`.claude/commands/checkpoint.md`) are also placeholder-free. They're verbatim across every project — that's intentional.
 
 ## Adding New Placeholders
 
