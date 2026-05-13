@@ -1,14 +1,14 @@
-# CLAUDE.md — {{CLIENT_NAME}} Project
+# CLAUDE.md — {{PROJECT_DISPLAY_NAME}} (Internal Product)
 
 > **Read this first.** If you are a Claude agent working on this project (Cowork, Claude Code, or a Claude.ai Project), this file orients you. It takes about 60 seconds.
 
 ## Who You're Working For
 
-**{{PRINCIPAL_USER}}** runs **{{PRACTICE_NAME}}**, {{PRACTICE_DESCRIPTION}}. {{PRINCIPAL_USER_FIRST}} is the human in charge. When this document says "the client," it means {{CLIENT_NAME}}. When it says "you," it means the Claude agent reading this file.
+**{{PRINCIPAL_USER}}** runs **{{PRACTICE_NAME}}**, {{PRACTICE_DESCRIPTION}}. {{PRINCIPAL_USER_FIRST}} is the human in charge. **This is an internal product** — owned and built by {{PRACTICE_NAME}}, not delivered to a client. When this document says "the product," it means {{PROJECT_DISPLAY_NAME}}. When it says "you," it means the Claude agent reading this file.
 
 {{BRANDING_NOTE}}
 
-## The Project in One Paragraph
+## The Product in One Paragraph
 
 {{PROJECT_ONE_PARAGRAPH}}
 
@@ -18,13 +18,13 @@
 
 ## Your Role as a Generalist Coordinator
 
-{{PRINCIPAL_USER_FIRST}} wants you to help with both file/asset management and active content production. That means you may be asked to:
+{{PRINCIPAL_USER_FIRST}} wants you to help with both the thinking and the building. That means you may be asked to:
 
-- Organize deliverables, track what's gathered vs. what's still needed from the client
-- Draft copy, page content, FAQs, blog posts, and other content artifacts
-- Pull themes and quotes from source material (reviews, transcripts, existing content) for copy inspiration
-- Maintain the decisions log as the project evolves
-- Prepare materials for {{PRINCIPAL_USER_FIRST}}'s review before anything goes to the client
+- Pressure-test product positioning, scope, and tradeoffs
+- Draft technical specs, ADRs, and design notes
+- Implement, refactor, and ship code
+- Maintain the decisions log as the product evolves
+- Surface insights from build work that should travel to other projects (clients, other tools)
 - Summarize project status when asked
 
 When in doubt about scope, ask {{PRINCIPAL_USER_FIRST}} before acting.
@@ -33,9 +33,9 @@ When in doubt about scope, ask {{PRINCIPAL_USER_FIRST}} before acting.
 
 A few things to be careful about. Not a long list — just the ones that matter:
 
-1. **Nothing goes to the client without {{PRINCIPAL_USER_FIRST}}'s review.** You are not sending emails, drafting client-facing communications for direct send, or publishing anything. Everything passes through {{PRINCIPAL_USER_FIRST}}.
-2. **Don't force closure on decisions {{PRINCIPAL_USER_FIRST}} has intentionally deferred.** If a decision is in the "Open" column of `01-context/decisions-log.md`, treat it as open.
-3. **Respect the client's stated preferences.** Communication style, tone, and scope boundaries are documented in `01-context/client-profile.md`. Follow them.
+1. **Don't force closure on decisions {{PRINCIPAL_USER_FIRST}} has intentionally deferred.** If a decision is in the "Open" column of `01-context/decisions-log.md`, treat it as open.
+2. **Respect the product's stated positioning and audience.** What this product is and who it's for is documented in `01-context/product-charter.md`. Drift from it on purpose, not by accident.
+3. **Capture build learnings that have leverage elsewhere.** If something you discover building this product would change how you'd approach a client engagement or another internal tool, log it in `01-context/insights.md` — internal projects exist partly to generate this kind of knowledge.
 
 {{PROJECT_SPECIFIC_GUARDRAILS}}
 
@@ -61,16 +61,16 @@ A few things to be careful about. Not a long list — just the ones that matter:
 | If you need to know... | Read this |
 |---|---|
 | What's happening *right now* — in-progress work, awaiting decisions, deployed state | `01-context/state.md` |
-| Who the client is and what they do | `01-context/client-profile.md` |
+| What this product is, who it's for, why we're building it | `01-context/product-charter.md` |
 | What we're building and the timeline | `01-context/project-scope.md` |
 | What's been decided and what's still open | `01-context/decisions-log.md` |
 | What previous sessions worked on (chronology) | `01-context/activity-log.md` |
 | Patterns, quirks, and half-formed observations | `01-context/insights.md` |
-| Positioning, voice, and messaging (if marketing-led) | `01-context/marketing-context.md` |
-| Proposals, contracts, kickoff notes | `02-deliverables/` |
-| Competitor reference, research, review analysis | `04-research/` |
-| Copy drafts, brand assets, photos | `03-assets/` |
-| Sitemap, wireframes, platform decision | `05-build/` |
+| Domain knowledge — market, competitors, regulations, jargon (if relevant) | `01-context/domain-context.md` |
+| Specs, design docs, kickoff notes | `02-deliverables/` |
+| Competitor reference, regulator docs, customer transcripts | `04-research/` |
+| Brand assets, draft copy, screenshots | `03-assets/` |
+| Architecture, sitemap, wireframes, infrastructure decisions | `05-build/` |
 
 ## Iterative Memory — Update As You Go
 
@@ -106,7 +106,7 @@ If `state.md` is current, the chat history should be irrelevant to resumption.
 
 ## Voice and Tone for Any Content You Draft
 
-- **For the client's public-facing content:** See `01-context/client-profile.md` for voice notes specific to this client. If none are documented yet, ask {{PRINCIPAL_USER_FIRST}} before drafting anything substantial.
+- **For this product's public-facing content** (landing page, marketing site, sales emails): See `01-context/domain-context.md` if it exists for tone and language guidance. If it doesn't, ask {{PRINCIPAL_USER_FIRST}} before drafting anything substantial.
 - **For {{PRINCIPAL_USER_FIRST}}'s internal docs and communications:** {{INTERNAL_VOICE_NOTES}}
 
 ## Cross-References

@@ -1,14 +1,14 @@
-# CLAUDE.md — {{CLIENT_NAME}} Project
+# CLAUDE.md — {{PROJECT_DISPLAY_NAME}} (Tool)
 
 > **Read this first.** If you are a Claude agent working on this project (Cowork, Claude Code, or a Claude.ai Project), this file orients you. It takes about 60 seconds.
 
 ## Who You're Working For
 
-**{{PRINCIPAL_USER}}** runs **{{PRACTICE_NAME}}**, {{PRACTICE_DESCRIPTION}}. {{PRINCIPAL_USER_FIRST}} is the human in charge. When this document says "the client," it means {{CLIENT_NAME}}. When it says "you," it means the Claude agent reading this file.
+**{{PRINCIPAL_USER}}** runs **{{PRACTICE_NAME}}**, {{PRACTICE_DESCRIPTION}}. {{PRINCIPAL_USER_FIRST}} is the human in charge. **This is a tool** — built for {{PRINCIPAL_USER_FIRST}}'s own use, the team's use, or for release. When this document says "the tool," it means {{PROJECT_DISPLAY_NAME}}. When it says "you," it means the Claude agent reading this file.
 
 {{BRANDING_NOTE}}
 
-## The Project in One Paragraph
+## The Tool in One Paragraph
 
 {{PROJECT_ONE_PARAGRAPH}}
 
@@ -16,26 +16,26 @@
 
 {{CURRENT_STATUS_BULLETS}}
 
-## Your Role as a Generalist Coordinator
+## Your Role
 
-{{PRINCIPAL_USER_FIRST}} wants you to help with both file/asset management and active content production. That means you may be asked to:
+{{PRINCIPAL_USER_FIRST}} wants you to help with the design, build, and documentation of this tool. That means you may be asked to:
 
-- Organize deliverables, track what's gathered vs. what's still needed from the client
-- Draft copy, page content, FAQs, blog posts, and other content artifacts
-- Pull themes and quotes from source material (reviews, transcripts, existing content) for copy inspiration
-- Maintain the decisions log as the project evolves
-- Prepare materials for {{PRINCIPAL_USER_FIRST}}'s review before anything goes to the client
+- Pressure-test scope — call out feature creep, suggest cuts
+- Implement, refactor, and ship code
+- Write usage docs in the README and inline
+- Maintain the decisions log as the tool evolves
+- Surface insights from build work that should travel to other tools, internal products, or client work
 - Summarize project status when asked
 
-When in doubt about scope, ask {{PRINCIPAL_USER_FIRST}} before acting.
+When in doubt about scope, ask {{PRINCIPAL_USER_FIRST}} before acting. Tools accrete features fast — the right answer is often "no, that's out of scope."
 
 ## Light-Touch Guardrails
 
 A few things to be careful about. Not a long list — just the ones that matter:
 
-1. **Nothing goes to the client without {{PRINCIPAL_USER_FIRST}}'s review.** You are not sending emails, drafting client-facing communications for direct send, or publishing anything. Everything passes through {{PRINCIPAL_USER_FIRST}}.
-2. **Don't force closure on decisions {{PRINCIPAL_USER_FIRST}} has intentionally deferred.** If a decision is in the "Open" column of `01-context/decisions-log.md`, treat it as open.
-3. **Respect the client's stated preferences.** Communication style, tone, and scope boundaries are documented in `01-context/client-profile.md`. Follow them.
+1. **Don't force closure on decisions {{PRINCIPAL_USER_FIRST}} has intentionally deferred.** If a decision is in the "Open" column of `01-context/decisions-log.md`, treat it as open.
+2. **Respect the scope boundaries.** What's in/out/later for this tool is documented in `01-context/tool-charter.md`. Drift from it on purpose, not by accident.
+3. **Capture build learnings that have leverage elsewhere.** If something you discover building this tool would change how you'd approach a client engagement, an internal product, or another tool, log it in `01-context/insights.md` — tools exist partly to generate this kind of knowledge.
 
 {{PROJECT_SPECIFIC_GUARDRAILS}}
 
@@ -61,16 +61,16 @@ A few things to be careful about. Not a long list — just the ones that matter:
 | If you need to know... | Read this |
 |---|---|
 | What's happening *right now* — in-progress work, awaiting decisions, deployed state | `01-context/state.md` |
-| Who the client is and what they do | `01-context/client-profile.md` |
-| What we're building and the timeline | `01-context/project-scope.md` |
+| What this tool is, who uses it, scope boundaries | `01-context/tool-charter.md` |
+| What's being built and the timeline | `01-context/project-scope.md` |
 | What's been decided and what's still open | `01-context/decisions-log.md` |
 | What previous sessions worked on (chronology) | `01-context/activity-log.md` |
 | Patterns, quirks, and half-formed observations | `01-context/insights.md` |
-| Positioning, voice, and messaging (if marketing-led) | `01-context/marketing-context.md` |
-| Proposals, contracts, kickoff notes | `02-deliverables/` |
-| Competitor reference, research, review analysis | `04-research/` |
-| Copy drafts, brand assets, photos | `03-assets/` |
-| Sitemap, wireframes, platform decision | `05-build/` |
+| Ecosystem knowledge — platform conventions, vendor APIs, gotchas (if relevant) | `01-context/domain-context.md` |
+| Specs, design docs, kickoff notes, ADRs | `02-deliverables/` |
+| Vendor docs, related-tool research | `04-research/` |
+| Brand assets, screenshots, draft docs | `03-assets/` |
+| Architecture, infrastructure decisions | `05-build/` |
 
 ## Iterative Memory — Update As You Go
 
@@ -106,7 +106,7 @@ If `state.md` is current, the chat history should be irrelevant to resumption.
 
 ## Voice and Tone for Any Content You Draft
 
-- **For the client's public-facing content:** See `01-context/client-profile.md` for voice notes specific to this client. If none are documented yet, ask {{PRINCIPAL_USER_FIRST}} before drafting anything substantial.
+- **For this tool's docs, README, and any user-facing content:** Plain, direct, technical-but-accessible. Match the tone of the existing README. If unsure, ask.
 - **For {{PRINCIPAL_USER_FIRST}}'s internal docs and communications:** {{INTERNAL_VOICE_NOTES}}
 
 ## Cross-References
@@ -120,4 +120,4 @@ If `state.md` is current, the chat history should be irrelevant to resumption.
 Ask {{PRINCIPAL_USER_FIRST}}. {{PRINCIPAL_USER_PRONOUN_CAP}} would rather answer a clarifying question up front than clean up an assumption later. Default toward explicitness over guessing.
 
 ---
-*Last updated: {{LAST_UPDATED}}. If this file is more than a few weeks old and the project has moved, assume it may be stale and check with {{PRINCIPAL_USER_FIRST}}.*
+*Last updated: {{LAST_UPDATED}}. If this file is more than a few weeks old and the tool has moved, assume it may be stale and check with {{PRINCIPAL_USER_FIRST}}.*

@@ -1,8 +1,20 @@
 # Placeholder Map
 
-> **Note on the iterative-memory model.** As of the 2026-05-08 upgrade, this template uses *iterative* memory upkeep instead of session-end discipline. Memory files (`state.md`, `activity-log.md`, `decisions-log.md`, `insights.md`) are updated as the work happens, gated by checkpoint triggers documented in each project's `CLAUDE.md`. The new file is `01-context/state.md` — "what is happening right now" — and there's a per-sub-project version of it under `02-deliverables/{slug}/state.md` for retainers with multiple active sub-projects. The top-level `state.md` is the meta-pointer. See `templates/client-project/.claude/skills/project-setup/SKILL.md` for the full philosophy and the three modes (greenfield, retrofit, reconcile) the skill now supports. If you are adding a new placeholder, document it here so the project-setup skill knows what to do with it.
+> **Note on the iterative-memory model.** As of the 2026-05-08 upgrade, the templates use *iterative* memory upkeep instead of session-end discipline. Memory files (`state.md`, `activity-log.md`, `decisions-log.md`, `insights.md`) are updated as the work happens, gated by checkpoint triggers documented in each project's `CLAUDE.md`. The file `01-context/state.md` — "what is happening right now" — is the live dashboard, with a per-sub-project version under `02-deliverables/{slug}/state.md` for retainers with multiple active sub-projects.
+>
+> **Note on the three templates.** As of the 2026-05-12 upgrade, this repo ships three templates: `client-project/` (engagements delivered to a client), `internal-product/` (products owned by the practice with a buyer being designed for), and `tool/` (utilities for own/team/public use, no buyer being designed for). See each template's `.claude/skills/project-setup/SKILL.md` for the full procedure for that type.
 
-Every `{{TOKEN}}` that appears in `templates/client-project/` (and any other templates under `templates/`) is documented here. If you add a new template file or a new token, document it in this file too — otherwise the `project-setup` skill won't know what to do with it.
+Every `{{TOKEN}}` that appears in any template under `templates/` is documented here. Some tokens are shared across all three templates (identity, principal-user, iterative-memory). Others are type-specific — `{{CLIENT_*}}` and `{{PMC_*}}` only appear in `client-project/`; `{{PRODUCT_*}}` and `{{DOMAIN_*}}` only in `internal-product/`; `{{TOOL_*}}` and `{{ECOSYSTEM_*}}` only in `tool/`.
+
+If you add a new template file or a new token, document it here too — otherwise the `project-setup` skill won't know what to do with it.
+
+## Token Naming Convention by Template
+
+| Template | Display-name token | Charter file token-prefix | Optional context file token-prefix |
+|---|---|---|---|
+| `client-project/` | `{{CLIENT_NAME}}` | `{{CLIENT_*}}` (in `client-profile.md`) | `{{PMC_*}}` (in `marketing-context.md`) |
+| `internal-product/` | `{{PROJECT_DISPLAY_NAME}}` | `{{PRODUCT_*}}` (in `product-charter.md`) | `{{DOMAIN_*}}` (in `domain-context.md`) |
+| `tool/` | `{{PROJECT_DISPLAY_NAME}}` | `{{TOOL_*}}` (in `tool-charter.md`) | `{{ECOSYSTEM_*}}` (in `domain-context.md`) |
 
 ## How to Read This Map
 
@@ -15,18 +27,21 @@ Each row is one placeholder:
 
 ## Core Identity Tokens
 
-| Token | What goes in it | Format | Files | Example |
+| Token | What goes in it | Format | Templates | Example |
 |---|---|---|---|---|
-| `{{CLIENT_NAME}}` | Common name for the client used in running text | Single line | `CLAUDE.md`, `README.md`, `01-context/*.md`, `02-deliverables/kickoff-notes.md`, `01-context/insights.md`, `01-context/marketing-context.md`, `01-context/state.md` | `Acme Futures` |
-| `{{CLIENT_LEGAL_NAME}}` | Full legal entity name | Single line | `README.md` | `Acme Futures Trading, LLC (Chicago)` |
-| `{{PROJECT_NAME}}` | Short name of the engagement | Single line | `README.md`, `01-context/project-scope.md` | `Website Redesign Project` |
-| `{{PRINCIPAL_CONTACT}}` | The human at the client the user works with | Single line | `README.md`, `CLAUDE.md`, `02-deliverables/kickoff-notes.md` | `Morgan Chen` |
-| `{{PROJECT_START}}` | When the engagement kicked off | Single line, human-readable | `README.md` | `March 2026` |
-| `{{PROJECT_STATUS}}` | One-line current state | Single line | `README.md` | `Proposal delivered, awaiting client approval` |
-| `{{COMPANY_NAME}}` | The company / practice running the engagement, with principal in parens | Single line | `README.md`, `02-deliverables/kickoff-notes.md` | `Orbit Consulting (Taylor Kim)` |
-| `{{LAST_UPDATED}}` | Date of last meaningful edit to the file | ISO date (YYYY-MM-DD) | `CLAUDE.md`, `01-context/decisions-log.md`, `01-context/activity-log.md`, `01-context/insights.md`, `01-context/marketing-context.md`, `01-context/state.md` | `2026-04-16` |
+| `{{CLIENT_NAME}}` | Common name for the client used in running text | Single line | `client-project/` only | `Acme Futures` |
+| `{{CLIENT_LEGAL_NAME}}` | Full legal entity name | Single line | `client-project/` only | `Acme Futures Trading, LLC (Chicago)` |
+| `{{PROJECT_DISPLAY_NAME}}` | Display name for the product or tool, used in running text and headers | Single line | `internal-product/`, `tool/` | `Compliance Review SaaS` / `GTM Form Tracker` |
+| `{{PROJECT_NAME}}` | Short name of the engagement (legacy — used in client `README.md`) | Single line | `client-project/` only | `Website Redesign Project` |
+| `{{PRINCIPAL_CONTACT}}` | The human at the client the user works with | Single line | `client-project/` only | `Morgan Chen` |
+| `{{PROJECT_START}}` | When the engagement / build kicked off | Single line, human-readable | All three | `March 2026` |
+| `{{PROJECT_STATUS}}` | One-line current state | Single line | All three | `Proposal delivered` / `MVP in development` / `Working but rough` |
+| `{{COMPANY_NAME}}` | The company / practice running the engagement, with principal in parens | Single line | `client-project/` only | `Orbit Consulting (Taylor Kim)` |
+| `{{LAST_UPDATED}}` | Date of last meaningful edit to the file | ISO date (YYYY-MM-DD) | All three | `2026-04-16` |
 
 ## Project Orientation Tokens (CLAUDE.md)
+
+These appear in `CLAUDE.md` across all three templates.
 
 | Token | What goes in it | Format | Example |
 |---|---|---|---|
@@ -44,7 +59,9 @@ Each row is one placeholder:
 | `{{LINEAR_PROJECT_LINK}}` | Link to the project in Linear if one exists | URL, or "none" | `https://linear.app/your-org/project/acme-futures` |
 | `{{PEOPLE_LINKS}}` | Links to any people-note files relevant to the project | List of links, or "none" | `[Morgan Chen](path/to/note)` |
 
-## Client Profile Tokens (01-context/client-profile.md)
+## Client Profile Tokens (`templates/client-project/01-context/client-profile.md`)
+
+Only present in `client-project/`.
 
 | Token | What goes in it | Format |
 |---|---|---|
@@ -58,16 +75,63 @@ Each row is one placeholder:
 | `{{TRUST_SIGNALS}}` | Specific proof points to feature in marketing | Bulleted list |
 | `{{PROFILE_SOURCES}}` | Where the profile data came from (reviews, website, client call, etc.) | Bulleted list |
 
-## Project Scope Tokens (01-context/project-scope.md)
+## Product Charter Tokens (`templates/internal-product/01-context/product-charter.md`)
+
+Only present in `internal-product/`.
 
 | Token | What goes in it | Format |
 |---|---|---|
-| `{{PROJECT_GOAL_BULLETS}}` | Numbered or bulleted list of what the project is trying to accomplish | List |
-| `{{INVESTMENT_STRUCTURE}}` | Pricing / tier structure of the engagement. Tables work well. | Tables or prose |
-| `{{PROJECT_TIMELINE}}` | Phase-by-phase timeline | Table |
-| `{{DELIVERABLES_ARCHITECTURE}}` | Detailed description of what's being built — pages, features, integrations | Prose + lists |
-| `{{PLATFORM_DECISIONS}}` | Platform / tech stack decisions (or deferred notes) | Prose |
-| `{{CLIENT_RESPONSIBILITIES}}` | What the client needs to provide | Bulleted list |
+| `{{PRODUCT_ONELINER}}` | One-sentence description of the product | Single line |
+| `{{PRODUCT_WHAT_IT_DOES}}` | What the product actually does for users | Short prose |
+| `{{PRODUCT_STAGE}}` | Stage in the lifecycle | Single line: `idea` / `discovery` / `MVP` / `live` / `sunset` |
+| `{{PRODUCT_WHY}}` | Strategic rationale — why the practice is building this | 1–2 paragraphs |
+| `{{PRODUCT_BUYER}}` | Who buys or uses the product (real or hypothetical) | Short prose |
+| `{{PRODUCT_DECISION_MAKERS}}` | Who inside the buyer org decides | Short prose |
+| `{{PRODUCT_PRIMARY_JOB}}` | The job the buyer hires the product for | Single line |
+| `{{PRODUCT_ANTI_PERSONA}}` | Who this is *not* for | Short prose |
+| `{{PRODUCT_SUCCESS_CRITERIA}}` | What "this worked" looks like — specific, measurable | Bulleted list |
+| `{{PRODUCT_KILL_CRITERIA}}` | When we'd shut this down or pivot | Bulleted list |
+| `{{PRODUCT_BUSINESS_MODEL}}` | How it makes money / creates value | Short prose |
+| `{{PRODUCT_PRICING_THINKING}}` | Current pricing hypothesis | Short prose |
+| `{{PRODUCT_TRUST_SIGNALS}}` | Credibility / proof points to build toward | Bulleted list |
+| `{{CHARTER_SOURCES}}` | Where the charter data came from | Bulleted list |
+
+## Tool Charter Tokens (`templates/tool/01-context/tool-charter.md`)
+
+Only present in `tool/`.
+
+| Token | What goes in it | Format |
+|---|---|---|
+| `{{TOOL_ONELINER}}` | One-sentence description of the tool | Single line |
+| `{{TOOL_WHAT_IT_DOES}}` | What the tool actually does | Short prose |
+| `{{TOOL_STAGE}}` | Stage in the lifecycle | Single line: `idea` / `prototype` / `working` / `used in production` / `sunset` |
+| `{{TOOL_WHY}}` | Why the tool exists — friction it removes, leverage it creates | 1–2 paragraphs |
+| `{{TOOL_USERS}}` | Who uses it | Short prose: `self` / `team` / `contractors` / `external` / `public OSS` |
+| `{{TOOL_PRIMARY_USE_CASE}}` | The main job the tool does | Single line |
+| `{{TOOL_SECONDARY_USE_CASES}}` | Other valid uses | Bulleted list |
+| `{{TOOL_ANTI_USE}}` | What this tool is *not* for | Short prose |
+| `{{TOOL_IN_SCOPE}}` | Features / capabilities in scope | Bulleted list |
+| `{{TOOL_OUT_OF_SCOPE}}` | Explicitly out of scope | Bulleted list |
+| `{{TOOL_LATER}}` | Maybe-later parking lot | Bulleted list |
+| `{{TOOL_SUCCESS_CRITERIA}}` | What "this is working" looks like | Bulleted list |
+| `{{TOOL_SUNSET_CRITERIA}}` | When we'd stop using or deprecate it | Bulleted list |
+| `{{TOOL_REUSE_KNOWLEDGE}}` | Patterns / techniques worth carrying to other projects | Bulleted list |
+| `{{CHARTER_SOURCES}}` | Where the charter data came from | Bulleted list |
+
+## Project Scope Tokens (01-context/project-scope.md)
+
+Used in all three templates with slight variations:
+
+| Token | What goes in it | Format | Templates |
+|---|---|---|---|
+| `{{PROJECT_GOAL_BULLETS}}` | Numbered or bulleted list of what the project is trying to accomplish | List | All three |
+| `{{INVESTMENT_STRUCTURE}}` | Pricing / tier structure of the engagement | Tables or prose | `client-project/` only |
+| `{{FUNDING_RESOURCING}}` | How the build is paid for and who's working on it | Prose | `internal-product/`, `tool/` |
+| `{{PROJECT_TIMELINE}}` | Phase-by-phase timeline | Table | All three |
+| `{{DELIVERABLES_ARCHITECTURE}}` | Detailed description of what's being built — pages, features, integrations | Prose + lists | All three |
+| `{{PLATFORM_DECISIONS}}` | Platform / tech stack decisions (or deferred notes) | Prose | All three |
+| `{{CLIENT_RESPONSIBILITIES}}` | What the client needs to provide | Bulleted list | `client-project/` only |
+| `{{EXTERNAL_DEPENDENCIES}}` | What the project needs from outside itself (vendor accounts, API access, design assets, etc.) | Bulleted list | `internal-product/`, `tool/` |
 
 ## Decisions Log Tokens (01-context/decisions-log.md)
 
@@ -112,9 +176,9 @@ The state file is the live in-flight dashboard. Most of its content is filled it
 
 The deeper tables (Deployed Services, Cloud Resources, Third-Party API State, Secrets, Scheduled Jobs, Production Data State, Open Risks, Resume Notes) are filled iteratively — empty rows when the file is first created. Per-sub-project state files under `02-deliverables/{slug}/state.md` follow the same shape and are created on demand by the sub-project's first working session.
 
-## Marketing Context Tokens (01-context/marketing-context.md)
+## Marketing Context Tokens (`templates/client-project/01-context/marketing-context.md`)
 
-This file is **optional** — only fill and include when the engagement is marketing-led (campaigns, content production, ad strategy, rebrand). The user's call. All tokens are prefixed `PMC_` (product-marketing-context) to group them visually.
+Only present in `client-project/`. **Optional** — only fill and include when the engagement is marketing-led (campaigns, content production, ad strategy, rebrand). The user's call. All tokens are prefixed `PMC_` (product-marketing-context) to group them visually.
 
 | Token | What goes in it | Format |
 |---|---|---|
@@ -154,6 +218,58 @@ This file is **optional** — only fill and include when the engagement is marke
 
 If a PMC_ section can't be filled from available material, leave the token in place with a `TODO:` note — better empty than fabricated.
 
+## Domain Context Tokens (`templates/internal-product/01-context/domain-context.md`)
+
+Only present in `internal-product/`. **Optional** — fill when the product sits in a domain with non-trivial external context (regulator constraints, competitive landscape, industry conventions). Delete the file if the product is purely tooling-focused.
+
+| Token | What goes in it | Format |
+|---|---|---|
+| `{{DOMAIN_CATEGORY}}` | The domain / category the product sits in | Single line |
+| `{{DOMAIN_WHY}}` | Why this domain — strategic fit | Short prose |
+| `{{DOMAIN_CONSTRAINTS}}` | Regulator / technical / cultural constraints worth noting | Short prose or bullets |
+| `{{DOMAIN_BUYERS}}` | Who's in the market | Short prose |
+| `{{DOMAIN_DECISION_MAKERS}}` | Who inside target orgs decides | Short prose |
+| `{{DOMAIN_PRIMARY_USE_CASE}}` | Main use case | Single line |
+| `{{DOMAIN_JTBD}}` | Jobs to be done | Bulleted list |
+| `{{DOMAIN_PERSONA_ROWS}}` | Markdown table rows for the Personas table | Pipe-delimited rows |
+| `{{DOMAIN_CORE_PROBLEM}}` | Central problem the product addresses | Short prose |
+| `{{DOMAIN_ALT_FAILURES}}` | Why current alternatives fall short | Bulleted list |
+| `{{DOMAIN_COST}}` | What the problem costs the buyer | Short prose |
+| `{{DOMAIN_EMOTIONAL_TENSION}}` | Emotional dimension of the problem | Short prose |
+| `{{DOMAIN_DIRECT_COMPETITOR}}` / `{{DOMAIN_DIRECT_WHY}}` | Direct competitor and why short | Single lines |
+| `{{DOMAIN_SECONDARY_COMPETITOR}}` / `{{DOMAIN_SECONDARY_WHY}}` | Secondary alternative | Single lines |
+| `{{DOMAIN_INDIRECT_ALTERNATIVE}}` / `{{DOMAIN_INDIRECT_WHY}}` | Status quo / indirect alt | Single lines |
+| `{{DOMAIN_DIFFERENTIATORS}}` | Key differentiators | Bulleted list |
+| `{{DOMAIN_HOW_DIFFERENT}}` / `{{DOMAIN_WHY_BETTER}}` | Differentiation narrative | Short prose each |
+| `{{DOMAIN_OBJECTION_ROWS}}` | Markdown table rows for Objections table | Pipe-delimited rows |
+| `{{DOMAIN_PUSH}}` / `{{DOMAIN_PULL}}` / `{{DOMAIN_HABIT}}` / `{{DOMAIN_ANXIETY}}` | Switching dynamics | Short prose each |
+| `{{DOMAIN_PROBLEM_VERBATIM}}` | Customer verbatim | Quoted line |
+| `{{DOMAIN_USE_WORDS}}` / `{{DOMAIN_AVOID_WORDS}}` | Language dos and don'ts | Short lists |
+| `{{DOMAIN_GLOSSARY_ROWS}}` | Glossary table rows | Pipe-delimited rows |
+| `{{DOMAIN_TONE}}` / `{{DOMAIN_STYLE}}` / `{{DOMAIN_PERSONALITY}}` | Brand voice descriptors | Short prose each |
+| `{{DOMAIN_METRICS_TARGETS}}` / `{{DOMAIN_REFERENCE_TARGETS}}` / `{{DOMAIN_TESTIMONIAL_TARGETS}}` | Proof points to build toward | Short prose each |
+
+If a `DOMAIN_*` section can't be filled from available material, leave the token in place with a `TODO:` note — better empty than fabricated.
+
+## Ecosystem Context Tokens (`templates/tool/01-context/domain-context.md`)
+
+Only present in `tool/`. **Optional** — fill when the tool plugs into a non-trivial ecosystem (vendor APIs with gotchas, platform conventions, OSS release context). Delete the file if the tool is self-contained.
+
+| Token | What goes in it | Format |
+|---|---|---|
+| `{{ECOSYSTEM_PLATFORM}}` | Platform / ecosystem the tool plugs into | Single line |
+| `{{ECOSYSTEM_INTEGRATION_SURFACE}}` | API / plugin / webhook / file format / CLI extension / etc. | Single line |
+| `{{ECOSYSTEM_CONVENTIONS}}` | Key conventions / norms in the ecosystem | Short prose or bullets |
+| `{{ECOSYSTEM_ALTERNATIVES_ROWS}}` | Markdown table rows for adjacent tools / alternatives | Pipe-delimited rows |
+| `{{ECOSYSTEM_CONSTRAINTS}}` | Rate limits, auth schemes, platform policies, regulator rules | Short prose or bullets |
+| `{{ECOSYSTEM_GOTCHAS}}` | Hard-won knowledge — "I wish I'd known this before I started" | Bulleted list |
+| `{{ECOSYSTEM_GLOSSARY_ROWS}}` | Glossary table rows | Pipe-delimited rows |
+| `{{ECOSYSTEM_REFERENCES}}` | Reference links — docs, blog posts, repos | Bulleted list |
+
+## Internal-Product / Tool Charter Sources
+
+Both `internal-product/01-context/product-charter.md` and `tool/01-context/tool-charter.md` use `{{CHARTER_SOURCES}}` — see the charter token tables above.
+
 ## Tokens That Don't Need Filling (Generic Subfolder Readmes)
 
 The READMEs in `03-assets/`, `04-research/`, and `05-build/` are generic and do not contain placeholders. They can be used as-is for most projects. If a specific project needs custom wording (e.g., naming specific competitors in `04-research/README.md`), edit directly rather than adding new placeholders.
@@ -170,10 +286,11 @@ When you add a new `{{TOKEN}}` to any template file:
 
 ## How to Find Unfilled Placeholders in an Instantiated Project
 
-After filling, search the project folder for any remaining `{{` to make sure nothing was missed. `$CLIENTS_ROOT` comes from `config.md` at the repo root.
+After filling, search the project folder for any remaining `{{` to make sure nothing was missed. The root path depends on the project type — `$CLIENTS_ROOT`, `$INTERNAL_ROOT`, or `$TOOLS_ROOT` (all defined in `config.md` / `config.local.md` at the repo root).
 
 ```bash
-grep -rn "{{" $CLIENTS_ROOT/{client-slug}/ --include="*.md"
+# Replace ROOT with $CLIENTS_ROOT, $INTERNAL_ROOT, or $TOOLS_ROOT depending on type
+grep -rn "{{" $ROOT/{project-slug}/ --include="*.md"
 ```
 
 Any matches are placeholders that didn't get filled. Either fill them, remove them, or replace with `TODO:` markers that explain what still needs to happen.

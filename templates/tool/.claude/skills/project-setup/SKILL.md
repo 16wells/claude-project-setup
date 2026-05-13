@@ -1,34 +1,34 @@
 ---
 name: project-setup
-description: Scaffold a new client project folder from the client-project template, retrofit an existing client folder to the template structure, or reconcile a client folder's memory files after a thread loss. This is the **client-engagement variant** of the project-setup skill — for internal products, use `templates/internal-product/.claude/skills/project-setup/`; for tools, use `templates/tool/.claude/skills/project-setup/`. Supports three modes: greenfield (new folder), retrofit (existing folder, add missing pieces), and reconcile (rebuild state.md and re-sync memory after the file system drifted from reality).
+description: Scaffold a new tool project folder from the tool template, retrofit an existing folder to the template structure, or reconcile a folder's memory files after a thread loss. This is the **tool variant** of the project-setup skill — for client engagements use `templates/client-project/.claude/skills/project-setup/`; for internal products use `templates/internal-product/.claude/skills/project-setup/`. Use when scaffolding tools for own use, team use, or open-source release — anything where the primary user is you/the team, not a buyer being designed for. Supports three modes: greenfield (new folder), retrofit (existing folder, add missing pieces), and reconcile (rebuild state.md and re-sync memory after the file system drifted from reality).
 ---
 
-# Project Setup — Client Folder Scaffolding
+# Project Setup — Tool Folder Scaffolding
 
-> **This skill handles client engagements.** For internal products owned by the practice, use `$TEMPLATE_ROOT/templates/internal-product/.claude/skills/project-setup/SKILL.md`. For tools (own use, team use, open source), use `$TEMPLATE_ROOT/templates/tool/.claude/skills/project-setup/SKILL.md`. The three skill files share the same overall structure but differ in vocabulary, prerequisite questions, and which charter file to populate.
+> **This skill handles tools** — utilities and dev projects built for own use, team use, or open-source release. No buyer being designed for. For client engagements, use `$TEMPLATE_ROOT/templates/client-project/.claude/skills/project-setup/SKILL.md`. For internal products with a buyer/audience, use `$TEMPLATE_ROOT/templates/internal-product/.claude/skills/project-setup/SKILL.md`.
 
 This skill handles three situations:
 
-- **Greenfield:** The user wants a new client project folder. You copy the template and fill placeholders.
-- **Retrofit:** An existing project folder needs the template structure added. You merge intelligently — add what's missing, leave existing content alone.
+- **Greenfield:** The user wants a new tool folder. You copy the template and fill placeholders.
+- **Retrofit:** An existing tool folder needs the template structure added. You merge intelligently — add what's missing, leave existing content alone.
 - **Reconcile:** An existing folder's memory has drifted from reality (long technical session, thread loss, in-flight state never made it to disk). You rebuild `state.md` and re-sync the other memory files from git history, the activity log, and on-disk evidence.
 
 **Before doing anything, read `$TEMPLATE_ROOT/config.local.md` first — if it exists, use those values. Otherwise fall back to `$TEMPLATE_ROOT/config.md`.** The `.local.md` variant is gitignored and holds the user's real paths and identity; `config.md` is the generic public version. Every path below is expressed relative to those two variables. Do not hardcode anyone's home directory. If the file that was actually read (either `.local.md` or `.md`) still contains `/REPLACE/WITH/...` placeholders, stop and tell the user to fill it first — the repo won't work until they do.
 
-The default template lives at `$TEMPLATE_ROOT/templates/client-project/`. Additional templates may live as sibling directories under `$TEMPLATE_ROOT/templates/`. Instantiated projects live at `$CLIENTS_ROOT/{client-slug}/`.
+The template lives at `$TEMPLATE_ROOT/templates/tool/`. Instantiated projects live at `$TOOLS_ROOT/{project-slug}/`.
 
 ## When to Use
 
 Greenfield triggers:
-- "Set up a new project for [client]"
-- "Scaffold a project folder for [client]"
-- "Start a new client workspace"
-- "Create the folder structure for [new engagement]"
+- "Set up a new tool"
+- "Scaffold a folder for [tool name]"
+- "Start a new utility project"
+- "Create the folder structure for [a script/integration/CLI]"
 
 Retrofit triggers:
-- "Retrofit this folder"
-- "Bring this project up to the template"
-- "Add the template structure to this existing project"
+- "Retrofit this folder" (and the folder is a tool/utility, not a client engagement or internal product)
+- "Bring this tool up to the template"
+- "Add the template structure to this existing tool folder"
 - The user selects an existing folder in Cowork and asks you to set it up
 
 Reconcile triggers:
@@ -58,22 +58,23 @@ Before doing anything, determine mode. Ask yourself:
 
 Use `AskUserQuestion` if anything important is missing. At minimum, gather:
 
-1. **Client slug** — short, lowercase, hyphenated (e.g. `acme-futures`, `contoso-brokers`)
-2. **Client legal name** — full entity name for the README
-3. **Client common name** — what we actually call them in conversation
-4. **Principal contact** — the human on the client side the user works with directly
-5. **Project name / scope in one line** — "website redesign," "GTM audit," "CMO engagement," etc.
-6. **Project start date** — ISO format
-7. **Current status** — one line. "Proposal drafted," "Kickoff scheduled," "Engagement active," etc.
+1. **Project slug** — short, lowercase, hyphenated (e.g. `gtm-form-tracker`, `linear-todos-sync`)
+2. **Tool display name** — the name used in running text and the README header
+3. **One-liner** — what the tool does in one sentence
+4. **Stage** — idea / prototype / working / used in production / sunset
+5. **Why this tool exists** — what friction it removes, what it automates
+6. **Users** — yourself / your team / contractors / external users / public open source
+7. **Project start date** — ISO format
+8. **Current status** — one line. "Initial prototype," "Working but rough," "In daily use," etc.
 
 Additional helpful context (ask if relevant):
-- Client website URL
-- Social proof the client has (reviews, awards, metrics)
-- Voice and communication preferences
-- Investment structure / pricing tier if known
+- Platform / ecosystem the tool plugs into (Shopify, GTM, Linear, etc.)
+- In/out scope boundaries (tools accrete features fast — write these down)
+- Success criteria — what "this is working" looks like
+- Tech stack picks
 - Project-specific guardrails the user wants the agent to respect
 
-In retrofit mode, some of these may already be answered in files like `CLAUDE.md` or `README.md`. Read first, ask only for the gaps.
+In retrofit mode, some of these may already be answered in files like `CLAUDE.md`, `README.md`, or any spec/design docs in the folder. Read first, ask only for the gaps.
 
 ## The Placeholder Map
 
@@ -86,21 +87,21 @@ Every `{{TOKEN}}` is documented in `$TEMPLATE_ROOT/placeholder-map.md`. Read tha
 ### Step 1: Confirm slug and target path
 
 Confirm with the user:
-- Slug: `{client-slug}`
-- Target: `$CLIENTS_ROOT/{client-slug}/`
+- Slug: `{project-slug}`
+- Target: `$TOOLS_ROOT/{project-slug}/`
 
 If the target folder already exists, **stop and ask the user.** This may actually be a retrofit situation.
 
 ### Step 2: Copy the template
 
 ```
-cp -R "$TEMPLATE_ROOT/templates/client-project" "$CLIENTS_ROOT/{client-slug}"
-find "$CLIENTS_ROOT/{client-slug}" -name ".DS_Store" -delete
+cp -R "$TEMPLATE_ROOT/templates/tool" "$TOOLS_ROOT/{project-slug}"
+find "$TOOLS_ROOT/{project-slug}" -name ".DS_Store" -delete
 ```
 
 ### Step 3: Read the placeholder map
 
-Read `$TEMPLATE_ROOT/placeholder-map.md` in full.
+Read `$TEMPLATE_ROOT/placeholder-map.md` in full. Note the section on tool-specific tokens (`TOOL_*`, `ECOSYSTEM_*`).
 
 ### Step 4: Gather the data
 
@@ -112,24 +113,24 @@ Use `Edit` with `replace_all: true` for each token, one file at a time:
 
 - `CLAUDE.md`
 - `README.md`
-- `01-context/client-profile.md`
+- `01-context/tool-charter.md`
 - `01-context/project-scope.md`
 - `01-context/decisions-log.md`
 - `01-context/activity-log.md`
-- `01-context/insights.md` — usually just the `{{CLIENT_NAME}}` and `{{LAST_UPDATED}}` tokens; `{{INITIAL_INSIGHTS}}` can be left empty or lightly seeded
-- `01-context/state.md` — sections empty, headers in place. Fill `{{CLIENT_NAME}}`, `{{LAST_UPDATED}}`, `{{LAST_UPDATED_SURFACE}}`, and `{{ACTIVE_SUBPROJECT_SLUG}}`. If there's no active sub-project yet, leave that as `none-yet` or similar. `{{INITIAL_STATE_NOTE}}` can be a one-line "Project just kicked off — no in-flight work." `{{EXTERNAL_SYSTEMS_INVENTORY_HINTS}}` can be left empty or seeded with any platforms the engagement is expected to touch (e.g., "Will likely touch: AWS Lambda, ActiveCampaign API, Mailgun.")
+- `01-context/insights.md` — usually just the `{{PROJECT_DISPLAY_NAME}}` and `{{LAST_UPDATED}}` tokens; `{{INITIAL_INSIGHTS}}` can be left empty or lightly seeded
+- `01-context/state.md` — sections empty, headers in place. Fill `{{PROJECT_DISPLAY_NAME}}`, `{{LAST_UPDATED}}`, `{{LAST_UPDATED_SURFACE}}`, and `{{ACTIVE_SUBPROJECT_SLUG}}`. If there's no active sub-project yet, leave that as `none-yet` or similar. `{{INITIAL_STATE_NOTE}}` can be a one-line "Project just kicked off — no in-flight work." `{{EXTERNAL_SYSTEMS_INVENTORY_HINTS}}` can be left empty or seeded with any platforms the tool is expected to touch (e.g., "Will likely touch: AWS Lambda, GTM container API.")
 - `02-deliverables/kickoff-notes.md`
 
-**Marketing-led engagements only:** If the project is marketing-led (campaigns, content production, rebrand, ad strategy, positioning work), also fill `01-context/marketing-context.md` with the `PMC_*` tokens. If marketing is peripheral to the project (e.g. pure technical build, analytics audit, ops engagement), **delete the `marketing-context.md` file** rather than leaving it with unfilled placeholders. Ask the user if you're unsure which category the project falls into.
+**Ecosystem-context-worthy tools only:** If the tool plugs into a platform with non-obvious conventions, integrates with vendor APIs that have gotchas, or is meant for public release, also fill `01-context/domain-context.md` with the `ECOSYSTEM_*` tokens. For self-contained tools with no meaningful external context, **delete the `domain-context.md` file** rather than leaving it with unfilled placeholders. Ask the user if you're unsure.
 
 Subfolder READMEs (`03-assets/`, `04-research/`, `05-build/`) are generic — skim but usually no edits needed.
 
 ### Step 6: Seed the decisions log
 
 Pre-fill realistic rows based on what the user has shared:
-- Any decisions already made (proposal / pre-sales)
+- Any decisions already made (tech stack, hosting, architecture)
 - Any open decisions you can identify
-- Any outstanding items you know the client owes
+- Any outstanding external dependencies you know about (vendor accounts, API access, credentials)
 
 Don't overfill. The user will add rows as the project moves.
 
@@ -181,33 +182,31 @@ Compare the existing folder to the template structure. Produce an inventory of:
 Retrofit is different from greenfield because the answers to most prerequisite questions are *already somewhere* — the folder, the user's other tools, or public sources. Your job is to find them, not ask. Work this hierarchy top-down, only dropping to the next tier when the current one is exhausted:
 
 **Tier 1 — Inside the folder itself (always check first):**
-- `CLAUDE.md` or `README.md` at folder root — often has client one-liner, project description, current status
-- `01-context/client-profile.md` — client identity, voice, market context, contact info
-- `01-context/project-scope.md` — what's being built, timeline, pricing
+- `CLAUDE.md` or `README.md` at folder root — often has tool one-liner, current status
+- `01-context/tool-charter.md` — what the tool is, who uses it, scope boundaries
+- `01-context/project-scope.md` — what's being built, timeline, tech stack
 - `01-context/decisions-log.md` — what's been settled, what's open
 - `01-context/activity-log.md` — chronology of recent work
 - `01-context/state.md` (if it exists) — current in-flight state
-- `02-deliverables/` — proposals, contracts, kickoff notes often contain the richest source material; sub-project subfolders are where active technical work lives
-- `03-assets/` — copy drafts reveal voice
-- `04-research/` — competitor analysis reveals positioning
-- Any loose `.md`, `.pdf`, `.docx` at the root — users often drop context here first
+- `02-deliverables/` — specs, design docs, ADRs often contain the richest source material; sub-project subfolders are where active technical work lives
+- The actual code — module structure, README, CI config — these tell you a lot about scope and conventions
+- `04-research/` — vendor/platform docs, related-tool analysis
+- Any loose `.md`, `.pdf` at the root — users often drop context here first
 
 **Tier 2 — The user's connected surfaces (check if Tier 1 has gaps):**
-- Second Brain / Obsidian notes on the client — search by client name
-- Linear projects tagged to the client
-- Fireflies meeting transcripts — kickoff calls, discovery calls
+- Second Brain / Obsidian notes on the tool
+- Linear projects tagged to the tool
 - Any prior Claude chat exports in the folder
 
 **Tier 3 — Public sources (fill in the picture):**
-- Client website — about page, practice areas, services, team bios
-- Google Business Profile — reviews, hours, location, category
-- LinkedIn — principal contact's background
-- Trade publications or press mentions
+- Vendor / platform docs the tool integrates with
+- Adjacent tools or alternatives in the same ecosystem
+- Open-source repos doing similar things
 
 **Tier 4 — Ask the user (last resort, and only with structure):**
 Only ask the user about something after Tiers 1–3 have been checked and came up empty. When you do ask, batch the gaps into one `AskUserQuestion` call rather than pinging them repeatedly. Frame each question as "I couldn't find X in [places checked] — is it Y, Z, or something else?" so the user sees you did the work.
 
-**Track provenance as you go.** For every significant fact you gather, note where it came from — that becomes `{{PROFILE_SOURCES}}` in `client-profile.md` and helps future agents (and the user) trace back why something is asserted. Example: "Client founded in 2008 (source: /02-deliverables/proposal.pdf, p. 2)".
+**Track provenance as you go.** For every significant fact you gather, note where it came from — that becomes `{{CHARTER_SOURCES}}` in `tool-charter.md` and helps future agents (and the user) trace back why something is asserted. Example: "Built to wrap GTM Container API — see /04-research/gtm-api-notes.md".
 
 ### Step 3: Propose a draft understanding for the user to confirm
 
@@ -235,8 +234,8 @@ For each missing file, copy from the template and then fill placeholders using t
 
 **About the new and contextual files:**
 - `01-context/state.md` — **always create if missing.** This is the central piece of the iterative-memory upgrade. If you can build a real state from existing artifacts (recent commits, last few activity-log entries, contents of an active `02-deliverables/{slug}/` subfolder), do — that's effectively a reconcile pass folded into the retrofit. If nothing's in flight, leave the sections empty with headers in place.
-- `01-context/insights.md` — always create if missing. Fill the `{{CLIENT_NAME}}` and `{{LAST_UPDATED}}` tokens. Seed `{{INITIAL_INSIGHTS}}` with any observations you gathered from Tier 1 mining. If nothing surfaced, leave it empty.
-- `01-context/marketing-context.md` — only create if the engagement is marketing-led. If marketing isn't the focus, do not create this file in retrofit. Ask the user if it's ambiguous.
+- `01-context/insights.md` — always create if missing. Fill the `{{PROJECT_DISPLAY_NAME}}` and `{{LAST_UPDATED}}` tokens. Seed `{{INITIAL_INSIGHTS}}` with any observations you gathered from Tier 1 mining. If nothing surfaced, leave it empty.
+- `01-context/domain-context.md` — only create if the tool plugs into a non-trivial ecosystem (vendor APIs with gotchas, platform conventions, open-source release context). If the tool is self-contained, do not create this file in retrofit. Ask the user if it's ambiguous.
 
 For missing subfolders, create them with a `.gitkeep`.
 
@@ -363,10 +362,10 @@ git push
 ## Guardrails (all modes)
 
 1. **Never overwrite existing content without asking.** In greenfield, don't copy over an existing folder. In retrofit, only add — never replace (except for the explicit Cross-Surface-Continuity-to-Iterative-Memory swap in CLAUDE.md, which is the documented surgical update). In reconcile, propose then apply.
-2. **Never invent client-specific facts.** If you don't know something, leave a `TODO:` with a question. The user will fill it.
+2. **Never invent tool-specific facts.** If you don't know something, leave a `TODO:` with a question. The user will fill it.
 3. **Respect the user's brand conventions.** If the user has a specific way their practice name should appear (capitalization, spacing, no suffix, etc.), follow it. Defer to any CLAUDE.md conventions already set in their existing projects.
-4. **Don't guess the platform decision.** For any web project, the platform (WordPress/Divi vs. Webflow vs. other) is typically deferred. Keep it in the Open Decisions table, not the Closed one.
-5. **Don't send anything to the client.** This skill is for scaffolding. Client-facing communication is always the user's call, after their review.
+4. **Don't guess the tech stack.** Language/framework/runtime choices are often deferred. Keep them in the Open Decisions table, not the Closed one.
+5. **Resist scope creep — flag it.** Tools accrete features fast. If the work in flight is drifting beyond the in-scope items in `tool-charter.md`, surface it rather than silently expanding scope.
 6. **Don't impose checkpoint discipline on subagents mid-flight.** If you spawn a subagent, let it work to its natural pause point (the next "report back to parent") and flush memory then — not in the middle of its run.
 
 ## What "Done" Looks Like
@@ -378,7 +377,7 @@ git push
 - The activity log has a starting or retrofit entry
 - `01-context/state.md` exists and reflects current reality (or, if greenfield, has empty sections with headers)
 - `01-context/insights.md` exists (even if lightly populated)
-- `01-context/marketing-context.md` is either filled in (for marketing-led projects) or deleted (for everything else) — never left with unfilled placeholders
+- `01-context/domain-context.md` is either filled in (for tools with non-trivial ecosystem context) or deleted (for everything else) — never left with unfilled placeholders
 - The user has been shown the result with a clean list of TODOs and any follow-up items
 
 **Reconcile complete when:**

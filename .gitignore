@@ -26,6 +26,9 @@ Desktop.ini
 # Local config (your personal paths + identity — never commit)
 config.local.md
 
+# Claude Code worktrees scratch directory at repo root only
+/.claude/
+
 # Social preview source (uploaded via GitHub UI, not tracked)
 social-preview.svg
 social-preview.png
