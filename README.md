@@ -1,6 +1,19 @@
 # Claude Project Setup
 
-A template system for spinning up project folders that work seamlessly across Claude.ai chats, Cowork on the desktop, and Claude Code in the terminal. Drop a new project into a folder and every Claude surface the user works in will already know it — the goal, the decisions, the voice, what the last session worked on.
+A template system for spinning up project folders that work seamlessly across Claude.ai chats, [Cowork](https://www.cowork.ai/) on the desktop, and Claude Code in the terminal. Drop a new project into a folder and every Claude surface the user works in will already know it — the goal, the decisions, the voice, what the last session worked on.
+
+## Quickstart
+
+```bash
+git clone git@github.com:16wells/claude-project-setup.git
+cd claude-project-setup
+cp config.md config.local.md   # personal paths + identity, gitignored
+$EDITOR config.local.md        # fill in TEMPLATE_ROOT, CLIENTS_ROOT, INTERNAL_ROOT, TOOLS_ROOT
+mkdir -p ~/.claude/commands
+cp templates/client-project/.claude/commands/project-setup.md ~/.claude/commands/project-setup.md
+```
+
+Then in Claude Code run `/project-setup` from anywhere. Full setup and usage details are below.
 
 ## The Problem This Solves
 
@@ -226,7 +239,7 @@ And at the user level:
 
 ## License
 
-See `LICENSE` at the repo root. If no license is committed yet, treat this repo as source-available for personal reference only until a license is added.
+MIT. See [`LICENSE`](LICENSE) at the repo root.
 
 ---
 *Built for anyone who juggles client engagements, internal products, and tools across Claude surfaces. Fork it, adapt the `CLAUDE.md` voice and guardrail sections to your own practice, and go.*
