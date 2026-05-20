@@ -7,13 +7,12 @@ A template system for spinning up project folders that work seamlessly across Cl
 ```bash
 git clone git@github.com:16wells/claude-project-setup.git
 cd claude-project-setup
-cp config.md config.local.md   # personal paths + identity, gitignored
-$EDITOR config.local.md        # fill in TEMPLATE_ROOT, CLIENTS_ROOT, INTERNAL_ROOT, TOOLS_ROOT
-mkdir -p ~/.claude/commands
-cp templates/client-project/.claude/commands/project-setup.md ~/.claude/commands/project-setup.md
+bash bin/setup.sh
 ```
 
-Then in Claude Code run `/project-setup` from anywhere. Full setup and usage details are below.
+The setup script is interactive (just press Enter to accept the defaults). It writes a gitignored `config.local.md`, creates your `CLIENTS_ROOT` / `INTERNAL_ROOT` / `TOOLS_ROOT` directories, and installs the user-level `/project-setup` slash command at `~/.claude/commands/project-setup.md`. Re-running is safe — it detects an existing config and asks before overwriting.
+
+Then in Claude Code run `/project-setup` from anywhere. Full setup details and the manual path are below.
 
 ## The Problem This Solves
 
@@ -81,9 +80,11 @@ The other three commands only make sense inside an already-set-up project, so th
 
 ## First-time Setup
 
-One-time steps after cloning this repo:
+The fastest path is the Quickstart at the top — `bash bin/setup.sh` handles everything below in one interactive pass.
 
-1. Open `config.md` at the repo root and fill in `TEMPLATE_ROOT`, `CLIENTS_ROOT`, `INTERNAL_ROOT`, and `TOOLS_ROOT`. (Or create `config.local.md` with the same shape if you'd rather keep your real paths out of git.)
+If you'd rather do it by hand, the same three steps:
+
+1. Create `config.local.md` at the repo root (or edit `config.md`) and fill in `TEMPLATE_ROOT`, `CLIENTS_ROOT`, `INTERNAL_ROOT`, and `TOOLS_ROOT`. `config.local.md` is gitignored — preferred for personal paths.
 2. Install the user-level `/project-setup` command so it works from anywhere:
 
    ```bash
