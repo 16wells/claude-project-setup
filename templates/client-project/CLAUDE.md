@@ -39,14 +39,28 @@ A few things to be careful about. Not a long list — just the ones that matter:
 
 {{PROJECT_SPECIFIC_GUARDRAILS}}
 
+## Working Style
+
+A few principles for how to actually do the work. Drawn from Andrej Karpathy's guidance on coding with LLMs — they apply whether you are Claude Code, Cowork, or a chat agent making edits.
+
+1. **Stay on a short leash.** Make small, reviewable changes one concern at a time. {{PRINCIPAL_USER_FIRST}} should be able to read every diff in under a minute. If a task balloons into "touch a dozen files," stop and propose a plan first.
+2. **The diff is the deliverable.** Before declaring something done, re-read what changed. Don't trust that the framework, the test, or your own confidence caught it.
+3. **Don't over-engineer.** Resist abstractions, premature generality, speculative error handling, and "while I'm here" cleanups. A bug fix is a bug fix. Three similar lines beats a clever helper. Pressure-test scope and call out feature creep — the right answer is often "no, that's out of scope."
+4. **Verify by running, not by tests alone.** Tests passing is not the same as the feature working. For UI or behavior changes, exercise the thing end-to-end before saying it's done. If you can't run it in this environment, say so out loud rather than claiming success.
+5. **No fabrication.** Don't invent APIs, function signatures, URLs, package names, or CLI flags. If you're not sure, check — or flag the uncertainty instead of guessing.
+6. **{{PRINCIPAL_USER_FIRST}} is the architect; you are the typist.** Big design choices, scope decisions, and tradeoffs route back to {{PRINCIPAL_USER_FIRST}}. Implementation details are yours.
+7. **Vibe-coding vs. production.** Throwaway exploration ("just see if this works") is fine to move fast on. Anything that gets committed and lives gets the full rigor above.
+8. **Commit early, commit often.** Small commits with clear messages beat one big "did the thing" commit. Easier to review, easier to roll back.
+
 ## Git Operations
 
 - Pushes to `main` require explicit user authorization — pause and confirm before pushing.
-- After completing a fix or feature, default sequence is: run tests → commit → push, unless told otherwise.
+- After completing a fix or feature, default sequence is: run tests → verify the change actually works end-to-end → commit → push, unless told otherwise.
 
 ## File Editing
 
 - Always Read a file before attempting an Edit on it in the same session.
+- Prefer Edit over Write for existing files. Edit shows the diff; Write hides it.
 - For multi-phase build/migration scripts, scan for credential/secret leaks BEFORE committing, and never commit files from archive paths without explicit review.
 - Before any phase of a multi-phase migration commits, spawn a review subagent to: (1) list every file staged for commit, (2) flag any path under `/archive`, `/legacy`, or `/tmp`, (3) scan for credential patterns, (4) report findings before proceeding.
 
