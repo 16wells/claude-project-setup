@@ -186,6 +186,26 @@ When you notice a pattern worth generalizing — something that would have saved
 
 If you update `/project-setup` at one level (user or project), remember to sync the other and across all three templates — they're meant to be identical copies.
 
+### When the overlay does *not* apply
+
+The iterative-memory overlay (`state.md`, `activity-log.md`, `decisions-log.md`,
+`insights.md`, and the `.claude/commands/` set) is built for engagement and
+planning folders that hand off session-by-session across Claude surfaces. It is
+**not appropriate for in-app code repos** — repos where application source lives
+at the root (Electron, Next.js, etc.). Forcing the overlay there adds ceremony
+without a matching workflow, and a lone root `01-context/` becomes a parallel
+tree fighting the code.
+
+For those repos, **defer the overlay** until a `.claude/`-rooted memory variant
+exists — one that co-exists with application source instead of sitting beside it
+as a separate folder tree. Until then, record the deliberate non-application in
+the repo itself (e.g. `01-context/scaffold-decision.md`, or wherever that repo
+already keeps its memory) so the next agent doesn't re-litigate it.
+
+*Observed 2026-06-18 during the Phase B portfolio sync: docs-scanner (Electron
+tool) and compliance-saas (Next.js product, memory under `product/`) each got a
+`scaffold-decision.md` instead of the overlay.*
+
 ## Layout At a Glance
 
 ```
