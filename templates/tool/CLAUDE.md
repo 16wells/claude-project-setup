@@ -128,6 +128,7 @@ If `state.md` is current, the chat history should be irrelevant to resumption.
 - **Second Brain project note:** {{SECOND_BRAIN_LINK}}
 - **Linear project:** {{LINEAR_PROJECT_LINK}}
 - **Related people notes:** {{PEOPLE_LINKS}}
+- **Stack-specific lessons repos:** once this project's tech stack (CMS, framework, hosting) is known, check `~/.claude/CLAUDE.md`'s "Cross-project references" section for a matching shared-lessons repo and add it here (e.g. EmDash, Astro, WPMU DEV hosting, SEO/AEO — that list grows over time, so treat the global file as the current source of truth rather than assuming this list is exhaustive). Leave as "none yet — platform TBD" while the platform decision is still open; don't guess it.
 
 ## When You're Unsure
 
