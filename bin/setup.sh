@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # setup.sh — interactive bootstrap for claude-project-setup.
 #
-# Prompts for the four ROOT paths, writes config.local.md, copies the
-# user-level /project-setup slash command, and creates the destination
-# directories. Idempotent — safe to re-run.
+# Prompts for the four ROOT paths, writes config.local.md, installs the
+# user-level /project-setup slash command (with this repo's path written
+# into it), and creates the destination directories. Idempotent — safe to
+# re-run.
 #
 # Usage:
 #   bash bin/setup.sh
@@ -101,18 +102,30 @@ done
 echo
 echo "User-level slash command:"
 mkdir -p "$USER_CMD_DIR"
-if [[ -f "$USER_CMD_TARGET" ]] && cmp -s "$SOURCE_CMD" "$USER_CMD_TARGET"; then
+
+# The user-level copy runs from anywhere, so it has to know where this repo
+# lives. Swap the marker line in the repo's command for the real path.
+RENDERED_CMD="$(mktemp)"
+trap 'rm -f "$RENDERED_CMD"' EXIT
+awk -v template_root="$REPO_ROOT" '
+  /^<!-- TEMPLATE_ROOT_LINE/ { print "**`TEMPLATE_ROOT` on this machine:** `" template_root "`"; next }
+  { print }
+' "$SOURCE_CMD" > "$RENDERED_CMD"
+grep -q '^\*\*`TEMPLATE_ROOT` on this machine:\*\*' "$RENDERED_CMD" \
+  || { echo "✗ TEMPLATE_ROOT_LINE marker not found in $SOURCE_CMD" >&2; exit 1; }
+
+if [[ -f "$USER_CMD_TARGET" ]] && cmp -s "$RENDERED_CMD" "$USER_CMD_TARGET"; then
   echo "  ✓ already installed at $USER_CMD_TARGET"
 elif [[ -f "$USER_CMD_TARGET" ]]; then
   echo "  ! $USER_CMD_TARGET exists and differs from the repo's version"
   if confirm "  Overwrite?"; then
-    cp "$SOURCE_CMD" "$USER_CMD_TARGET"
+    cp "$RENDERED_CMD" "$USER_CMD_TARGET"
     echo "  ✔ overwrote $USER_CMD_TARGET"
   else
     echo "  ✓ kept existing"
   fi
 else
-  cp "$SOURCE_CMD" "$USER_CMD_TARGET"
+  cp "$RENDERED_CMD" "$USER_CMD_TARGET"
   echo "  ✔ installed $USER_CMD_TARGET"
 fi
 

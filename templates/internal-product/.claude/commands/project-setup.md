@@ -5,9 +5,17 @@ argument-hint: [new|retrofit|reconcile] [type:client|internal-product|tool] [slu
 
 Handle project setup for one of three project types: **client engagement**, **internal product** owned by the practice, or **tool** built for personal/team use. There are three modes (greenfield / retrofit / reconcile) — you must determine both the type and the mode before doing any work.
 
-## Step 0: Read config first
+## Step 0: Locate the template repo, then read its config
 
-Before anything else, read `$TEMPLATE_ROOT/config.local.md` first — if it exists, use those values. Otherwise fall back to `$TEMPLATE_ROOT/config.md` at the root of the cloned `claude-project-setup` repo. The `.local.md` variant is gitignored and holds the user's real paths and identity; `config.md` is the generic public version.
+`TEMPLATE_ROOT` is the absolute path to the cloned `claude-project-setup` repo on this machine. Nothing below works until you know it. Resolve it in this order:
+
+1. The line directly below, if it holds a real path. `bin/setup.sh` writes it into the user-level copy of this command (`~/.claude/commands/project-setup.md`) at install time.
+2. If the line below is still the unfilled marker comment (project-level copies inside a project folder always are), read `~/.claude/commands/project-setup.md` and take the path from the same line there.
+3. If neither gives a path, ask the user. Do not search the filesystem or guess.
+
+<!-- TEMPLATE_ROOT_LINE: bin/setup.sh replaces this line in the user-level copy -->
+
+Then read `$TEMPLATE_ROOT/config.local.md` — if it exists, use those values. Otherwise fall back to `$TEMPLATE_ROOT/config.md`. The `.local.md` variant is gitignored and holds the user's real paths and identity; `config.md` is the generic public version. If the config's own `TEMPLATE_ROOT` value differs from the path you used to find it, tell the user: the repo has probably moved and `bin/setup.sh` needs re-running.
 
 That file defines:
 

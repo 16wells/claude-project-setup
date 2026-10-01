@@ -92,7 +92,13 @@ If you'd rather do it by hand, the same three steps:
    cp "$TEMPLATE_ROOT/templates/client-project/.claude/commands/project-setup.md" ~/.claude/commands/project-setup.md
    ```
 
-   (The same command file is identical across all three templates — copy from any of them. The user-level file isn't committed to the repo; just copy the project-level version up. Both are designed to read `config.md` for paths.)
+   Then open `~/.claude/commands/project-setup.md` and replace the `<!-- TEMPLATE_ROOT_LINE ... -->` comment in Step 0 with:
+
+   ```
+   **`TEMPLATE_ROOT` on this machine:** `/absolute/path/to/claude-project-setup`
+   ```
+
+   (The same command file is identical across all three templates — copy from any of them. The user-level file isn't committed to the repo. It's the one place the repo's location is recorded: the command runs from anywhere, so it can't find `config.md` without it. Project-level copies leave the marker in place and look the path up from the user-level copy. `bin/setup.sh` does this substitution for you, and re-running it after pulling an update refreshes the user-level copy.)
 
 3. Confirm the destination directories exist. If not, create them: `mkdir -p "$CLIENTS_ROOT" "$INTERNAL_ROOT" "$TOOLS_ROOT"`.
 
