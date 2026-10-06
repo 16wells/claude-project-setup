@@ -238,11 +238,13 @@ $TEMPLATE_ROOT/
     │   │   ├── activity-log.md
     │   │   ├── insights.md
     │   │   ├── state.md
+    │   │   ├── drive-index.md          ← Pointer to the client's Drive cold-storage folder
     │   │   └── marketing-context.md    ← Optional, marketing-led only
     │   ├── 02-deliverables/
     │   ├── 03-assets/{copy,photos,brand}/
     │   ├── 04-research/competitors/
-    │   └── 05-build/wireframes/
+    │   ├── 05-build/wireframes/
+    │   └── workstreams/<name>/         ← Multi-workstream engagements; code workstreams are nested repos
     ├── internal-product/               ← Products owned by the practice
     │   ├── (same shape as client-project, with these differences:)
     │   ├── 01-context/product-charter.md       ← Replaces client-profile.md

@@ -57,6 +57,12 @@ A few principles for how to actually do the work. Drawn from Andrej Karpathy's g
 - Pushing to `main` is fine — no special authorization gate. Push as part of the normal flow, don't pause to ask.
 - After completing a fix or feature, default sequence is: run tests → verify the change actually works end-to-end → commit → push, unless told otherwise.
 
+## Repo and Workstream Layout
+
+- This folder is the client's **umbrella repo** (private, `16wells/<client-slug>`). It tracks account memory (`01-context/`), deliverables, assets, research, and doc-only workstreams.
+- Multi-workstream engagements put each workstream under `workstreams/<name>/`. A workstream that contains code gets its **own repo** (`16wells/<client-prefix>-<name>`), nested in place and listed in the umbrella's `.gitignore`. Commit and push in whichever repo you changed.
+- Finished or dead work leaves the folder: repos get archived on GitHub and the local clone deleted; loose files go to Drive (`01-context/drive-index.md`). Nothing stays here that isn't active.
+
 ## File Editing
 
 - Always Read a file before attempting an Edit on it in the same session.
@@ -85,6 +91,8 @@ A few principles for how to actually do the work. Drawn from Andrej Karpathy's g
 | Competitor reference, research, review analysis | `04-research/` |
 | Copy drafts, brand assets, photos | `03-assets/` |
 | Sitemap, wireframes, platform decision | `05-build/` |
+| Code, specs, and working files for a specific workstream | `workstreams/<name>/` (multi-workstream engagements) |
+| Old decks, exports, meeting notes (cold storage in Drive) | `01-context/drive-index.md` |
 
 ## Iterative Memory — Update As You Go
 

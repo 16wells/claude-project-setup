@@ -14,6 +14,8 @@
 - **`03-assets/`** — Copy drafts, photos, brand materials (gathered as project progresses).
 - **`04-research/`** — Competitor analysis, review theme extraction, SEO keyword work, market research.
 - **`05-build/`** — Sitemap, wireframes, and platform decision record. Populated during design/build phase.
+- **`workstreams/`** — (multi-workstream engagements only) one folder per workstream; code workstreams are their own nested repos.
+- **`01-context/drive-index.md`** — What's in the client's Google Drive folder (cold storage) and where new things land.
 
 ## Key Project Files at a Glance
 

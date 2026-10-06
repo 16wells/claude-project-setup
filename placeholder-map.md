@@ -176,6 +176,15 @@ The state file is the live in-flight dashboard. Most of its content is filled it
 
 The deeper tables (Deployed Services, Cloud Resources, Third-Party API State, Secrets, Scheduled Jobs, Production Data State, Open Risks, Resume Notes) are filled iteratively — empty rows when the file is first created. Per-sub-project state files under `02-deliverables/{slug}/state.md` follow the same shape and are created on demand by the sub-project's first working session.
 
+## Drive Index Tokens (`templates/client-project/01-context/drive-index.md`)
+
+| Token | What goes in it | Format | Templates | Example |
+|---|---|---|---|---|
+| `{{DRIVE_CLIENT_FOLDER}}` | Absolute path to the client's cold-storage folder on the local Google Drive mount | Single line | `client-project/` only | `/Users/you/Library/CloudStorage/GoogleDrive-you@firm.com/My Drive/Business/Clients/Acme Futures/` |
+| `{{DRIVE_INDEX_DATE}}` | Date the "What's There" table was last verified | ISO date | `client-project/` only | `2026-10-06` |
+
+(`{{CLIENT_NAME}}` and `{{LINEAR_PROJECT_LINK}}` are reused from the sections above.)
+
 ## Marketing Context Tokens (`templates/client-project/01-context/marketing-context.md`)
 
 Only present in `client-project/`. **Optional** — only fill and include when the engagement is marketing-led (campaigns, content production, ad strategy, rebrand). The user's call. All tokens are prefixed `PMC_` (product-marketing-context) to group them visually.
