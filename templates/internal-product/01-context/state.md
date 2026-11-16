@@ -1,6 +1,6 @@
 # State — {{PROJECT_DISPLAY_NAME}}
 
-> **What is happening right now.** This file is the single source of truth for the project's *in-flight* reality. A fresh agent reading just `CLAUDE.md` + this file should be able to pick up where the last session left off, without consulting any chat history.
+> **What is happening right now.** This file is the single source of truth for the project's *in-flight* reality. A fresh agent reading just `AGENTS.md` + this file should be able to pick up where the last session left off, without consulting any chat history.
 >
 > Keep this file lean — **~200 lines max.** When detail ages out, move it to `activity-log.md` (chronology) or to the relevant deliverable file. This file is not a second activity log.
 

@@ -38,9 +38,12 @@ If the file that was actually read (either `.local.md` or `.md`) is missing or a
 
 Detect mode from the argument or context:
 - "new [slug]" → greenfield
-- "retrofit [path]", or any existing folder (with or without `state.md`) → retrofit. This is the default for an existing folder.
-- "reconcile [path]", "the state file is out of date", "rebuild memory" → reconcile (only when asked this explicitly)
+- "retrofit [path]", or an existing folder that is missing template pieces → retrofit
+- "reconcile [path]", "the state file is out of date", "rebuild memory", or an existing folder that already conforms to the template but has a stale `state.md` → reconcile
+- An existing folder where it isn't clear which of the two applies → ask the user. Don't default to retrofit.
 - No folder named → ask the user which folder before proceeding
+
+**In every mode, confirm the target folder with the user before creating or changing anything.**
 
 ## Step 2: Determine the project type
 
@@ -103,7 +106,7 @@ Also read `$TEMPLATE_ROOT/placeholder-map.md` — it documents every `{{TOKEN}}`
 4. Propose a draft understanding for the user to confirm before writing authoritative content.
 5. Show the user the plan before touching files.
 6. Create missing files and fill placeholders. Always create `01-context/state.md` and `01-context/insights.md`. Only create the optional context file (`marketing-context.md` / `domain-context.md`) if the project actually warrants it.
-7. Surgical additions to existing files — replace any "Cross-Surface Continuity — Read This" section (session-end discipline) in the project's main instruction file (`CLAUDE.md`, or `AGENTS.md` when `CLAUDE.md` only points to it) with the "Iterative Memory — Update As You Go" section, and ensure orientation table rows for `state.md`, `activity-log.md`, and `insights.md` exist.
+7. Surgical additions to existing files. If `CLAUDE.md` still carries the project guide (more than a short pointer), move its content to `AGENTS.md` unchanged and replace `CLAUDE.md` with the stub (an `@AGENTS.md` import plus one line for other agents). Then, in `AGENTS.md`, replace any "Cross-Surface Continuity — Read This" section (session-end discipline) with the "Iterative Memory — Update As You Go" section, and ensure orientation table rows for `state.md`, `activity-log.md`, and `insights.md` exist.
 8. Append a retrofit entry to `01-context/activity-log.md` listing exactly what was added.
 9. Refresh `state.md` so it reflects the current commit and any in-flight work the agent could glean from the existing folder.
 10. Report back.
@@ -125,7 +128,8 @@ This is the "fix me up after a thread loss" tool. Use it when the file system ha
 ## Step 7: What "done" looks like
 
 **Greenfield + retrofit:**
-- No `{{PLACEHOLDER}}` tokens remain in key files (except `TODO:` markers the user will fill later)
+- No `{{PLACEHOLDER}}` tokens or `[FILL IN]` / `TBD` markers remain. A deliberate `TODO: [question]` stays for a fact the existing material doesn't contain; never invent one. Grep the generated files for these patterns, and list every `TODO` in the report.
+- Thin starters are fine: `state.md` can be headers only and `insights.md` can be empty. Fill the other context files only from real material.
 - `01-context/state.md` exists with headers in place (or, in retrofit, reflects current reality)
 - The activity log has a starting or retrofit entry
 - The decisions log has something real in it
@@ -138,6 +142,6 @@ This is the "fix me up after a thread loss" tool. Use it when the file system ha
 - `state.md` reflects current reality
 - Contradictions in other memory files are resolved or explicitly flagged
 - Commit pushed
-- The user can read `CLAUDE.md` + `state.md` and resume work without chat history
+- The user can read `AGENTS.md` + `state.md` and resume work without chat history
 
 Arguments: $ARGUMENTS

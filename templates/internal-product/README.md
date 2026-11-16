@@ -8,7 +8,7 @@
 
 ## Folder Guide
 
-- **`CLAUDE.md`** — Orientation for any Claude agent (Cowork, Claude Code, Projects). Read this first if you're an AI assistant.
+- **`AGENTS.md`** — Orientation for any AI agent (Claude, Codex, Cursor, Cowork, and others). Read this first if you're an AI assistant. `CLAUDE.md` is a stub that imports it for Claude Code.
 - **`01-context/`** — Product charter, project scope, decisions, state, insights, optional domain context.
 - **`02-deliverables/`** — Specs, design docs, kickoff notes, ADRs.
 - **`03-assets/`** — Brand assets, draft copy, screenshots, marketing material.
@@ -40,4 +40,4 @@ From inside this folder in Claude Code:
 
 ## For Future You
 
-If you're opening this folder three months from now and forget where anything lives, start with `CLAUDE.md`. It's written for AI agents but doubles as a project summary for the human running the product.
+If you're opening this folder three months from now and forget where anything lives, start with `AGENTS.md`. It's written for AI agents but doubles as a project summary for the human running the product.

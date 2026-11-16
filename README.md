@@ -18,7 +18,7 @@ Then in Claude Code run `/project-setup` from anywhere. Full setup details and t
 
 Working across multiple Claude surfaces is a context nightmare. Every browser chat starts blank. Every Claude Code session starts blank. Every Cowork window starts blank. You end up re-explaining the same project five times a week.
 
-This repo is a set of folder templates plus a small handful of slash commands that fix that. Everything lives on disk, every Claude surface reads the same files, and the iterative-memory discipline (update `state.md` as work happens, append to `activity-log.md`, log decisions, drop observations in `insights.md`) is documented in every project's `CLAUDE.md`.
+This repo is a set of folder templates plus a small handful of slash commands that fix that. Everything lives on disk, every Claude surface reads the same files, and the iterative-memory discipline (update `state.md` as work happens, append to `activity-log.md`, log decisions, drop observations in `insights.md`) is documented in every project's `AGENTS.md`.
 
 ## The Three Templates
 
@@ -39,8 +39,8 @@ All three share the same `01-context/` → `02-deliverables/` → `03-assets/` �
 ## How It Works in 30 Seconds
 
 1. Clone this repo. Edit `config.md` (or create `config.local.md`) to point at where you want your client / internal-product / tool folders created.
-2. Run `/project-setup` in Claude Code (or describe the situation to Cowork/Chat). The command asks **which template type** (client / internal-product / tool), then scaffolds the right folder, populated with what you know, seeded with a `CLAUDE.md` that orients any future agent.
-3. Work the project from any Claude surface. At the start of each session, the agent reads `CLAUDE.md`, `state.md`, the last few `activity-log.md` entries, and the open rows in `decisions-log.md`. As the work happens, it updates those files iteratively (not at session-end).
+2. Run `/project-setup` in Claude Code (or describe the situation to Cowork/Chat). The command asks **which template type** (client / internal-product / tool), then scaffolds the right folder, populated with what you know, seeded with an `AGENTS.md` that orients any future agent.
+3. Work the project from any Claude surface. At the start of each session, the agent reads `AGENTS.md`, `state.md`, the last few `activity-log.md` entries, and the open rows in `decisions-log.md`. As the work happens, it updates those files iteratively (not at session-end).
 4. Months later, opening the folder from any surface, the agent knows exactly where things stand.
 
 ## Configure First
@@ -157,7 +157,7 @@ The skill will:
 2. Inventory what's in the folder vs. what the matching template provides
 3. Show the user the plan before making any changes
 4. Create missing files (state.md, activity log, subfolders, `.claude/` commands) from the template
-5. Add missing sections to existing files (like Iterative Memory in `CLAUDE.md`) without overwriting the rest
+5. Add missing sections to existing files (like Iterative Memory in `AGENTS.md`) without overwriting the rest
 6. Leave everything else alone
 7. Append a retrofit entry to the activity log documenting exactly what was added
 
@@ -167,7 +167,7 @@ Rule of thumb: retrofit is **additive**, never destructive. If something would o
 
 The templates are designed so that the user can jump between Claude in a browser chat, Cowork on the desktop, and Claude Code in the terminal — and whichever surface they use next will know exactly where the previous one left off. This happens through five files in every project (regardless of template type):
 
-1. **`CLAUDE.md`** — Read first by every Claude agent. It orients the agent on the project, the guardrails, and the voice. The agent's "who, what, why."
+1. **`AGENTS.md`** — Read first by every agent (Claude, Codex, Cursor, and others). It orients the agent on the project, the guardrails, and the voice. The agent's "who, what, why." `CLAUDE.md` is a stub that imports it for Claude Code.
 2. **`01-context/state.md`** — The live dashboard: what's happening *right now*, what's awaiting human decision, what external systems are in what state. Updated as work happens.
 3. **`01-context/decisions-log.md`** — The ledger of closed decisions, open decisions, and outstanding external dependencies.
 4. **`01-context/activity-log.md`** — The session handoff file. Each work session appends a short entry. Any agent starting a session scans recent entries to see what got done and what's queued.
@@ -224,7 +224,8 @@ $TEMPLATE_ROOT/
 ├── placeholder-map.md                  ← Every {{TOKEN}} documented, by template
 └── templates/                          ← All templates live here
     ├── client-project/                 ← Engagements delivered to a client
-    │   ├── CLAUDE.md
+    │   ├── AGENTS.md                   ← The single project guide
+    │   ├── CLAUDE.md                   ← Stub: @AGENTS.md import
     │   ├── README.md
     │   ├── .claude/
     │   │   ├── commands/{project-setup,project-status,log-decision,log-activity,checkpoint}.md
@@ -250,13 +251,13 @@ $TEMPLATE_ROOT/
     │   ├── 01-context/product-charter.md       ← Replaces client-profile.md
     │   ├── 01-context/domain-context.md        ← Replaces marketing-context.md (optional)
     │   ├── (project-scope.md uses funding/external-dependencies instead of investment/client-responsibilities)
-    │   └── (CLAUDE.md, README.md, kickoff-notes.md, SKILL.md framed for internal products)
+    │   └── (AGENTS.md, CLAUDE.md stub, README.md, kickoff-notes.md, SKILL.md framed for internal products)
     └── tool/                           ← Utilities for own/team/public use
         ├── (same shape as client-project, with these differences:)
         ├── 01-context/tool-charter.md          ← Replaces client-profile.md
         ├── 01-context/domain-context.md        ← Replaces marketing-context.md (optional)
         ├── (project-scope.md uses resourcing/external-dependencies)
-        └── (CLAUDE.md, README.md, kickoff-notes.md, SKILL.md framed for tools)
+        └── (AGENTS.md, CLAUDE.md stub, README.md, kickoff-notes.md, SKILL.md framed for tools)
 ```
 
 And at the user level:
@@ -271,4 +272,4 @@ And at the user level:
 MIT. See [`LICENSE`](LICENSE) at the repo root.
 
 ---
-*Built for anyone who juggles client engagements, internal products, and tools across Claude surfaces. Fork it, adapt the `CLAUDE.md` voice and guardrail sections to your own practice, and go.*
+*Built for anyone who juggles client engagements, internal products, and tools across Claude surfaces. Fork it, adapt the `AGENTS.md` voice and guardrail sections to your own practice, and go.*

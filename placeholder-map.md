@@ -1,6 +1,6 @@
 # Placeholder Map
 
-> **Note on the iterative-memory model.** As of the 2026-05-08 upgrade, the templates use *iterative* memory upkeep instead of session-end discipline. Memory files (`state.md`, `activity-log.md`, `decisions-log.md`, `insights.md`) are updated as the work happens, gated by checkpoint triggers documented in each project's `CLAUDE.md`. The file `01-context/state.md` — "what is happening right now" — is the live dashboard, with a per-sub-project version under `02-deliverables/{slug}/state.md` for retainers with multiple active sub-projects.
+> **Note on the iterative-memory model.** As of the 2026-05-08 upgrade, the templates use *iterative* memory upkeep instead of session-end discipline. Memory files (`state.md`, `activity-log.md`, `decisions-log.md`, `insights.md`) are updated as the work happens, gated by checkpoint triggers documented in each project's `AGENTS.md`. The file `01-context/state.md` — "what is happening right now" — is the live dashboard, with a per-sub-project version under `02-deliverables/{slug}/state.md` for retainers with multiple active sub-projects.
 >
 > **Note on the three templates.** As of the 2026-05-12 upgrade, this repo ships three templates: `client-project/` (engagements delivered to a client), `internal-product/` (products owned by the practice with a buyer being designed for), and `tool/` (utilities for own/team/public use, no buyer being designed for). See each template's `.claude/skills/project-setup/SKILL.md` for the full procedure for that type.
 
@@ -39,22 +39,22 @@ Each row is one placeholder:
 | `{{COMPANY_NAME}}` | The company / practice running the engagement, with principal in parens | Single line | `client-project/` only | `Orbit Consulting (Taylor Kim)` |
 | `{{LAST_UPDATED}}` | Date of last meaningful edit to the file | ISO date (YYYY-MM-DD) | All three | `2026-04-16` |
 
-## Project Orientation Tokens (CLAUDE.md)
+## Project Orientation Tokens (AGENTS.md)
 
-These appear in `CLAUDE.md` across all three templates.
+These appear in `AGENTS.md` across all three templates.
 
 | Token | What goes in it | Format | Example |
 |---|---|---|---|
 | `{{PRINCIPAL_USER}}` | Full name of the human running the engagement | Single line | `Taylor Kim` |
-| `{{PRINCIPAL_USER_FIRST}}` | First name used conversationally throughout CLAUDE.md | Single word | `Taylor` |
+| `{{PRINCIPAL_USER_FIRST}}` | First name used conversationally throughout AGENTS.md | Single word | `Taylor` |
 | `{{PRINCIPAL_USER_PRONOUN_CAP}}` | Subject pronoun, capitalized, used mid-sentence when starting a new clause | He / She / They | `He` |
 | `{{PRACTICE_NAME}}` | Name of the user's practice, agency, or company | Single line | `Orbit Consulting` |
 | `{{PRACTICE_DESCRIPTION}}` | Short clause describing what the practice is | Single line (no period) | `a digital marketing consulting practice` |
 | `{{BRANDING_NOTE}}` | Optional one-paragraph note about brand conventions (capitalization, spelling, no-suffix rules, etc.). Leave empty if no conventions to enforce. | One paragraph, or empty | `**Important branding note:** The company name is always written as OneWord — no spaces, no hyphens, no suffix.` |
-| `{{INTERNAL_VOICE_NOTES}}` | A short **pointer** to the user's shared internal-voice reference, not the full voice text inline. Keeping the actual voice notes in one shared doc (rather than pasted into every project's `CLAUDE.md`) means an update to the user's voice doesn't require editing N projects. Set the real value once in `config.local.md`. | Single line, a link/path | `See [`16wells/16wells-voice-guide`](https://github.com/16wells/16wells-voice-guide) (`~/Sites/references/16wells-voice-guide/voice-guide.md`).` |
-| `{{PROJECT_ONE_PARAGRAPH}}` | A dense paragraph describing what the project is, who it's for, why it matters. Should give a new agent enough to operate intelligently. | One long paragraph | See `CLAUDE.md` of a real project |
-| `{{CURRENT_STATUS_BULLETS}}` | 3–6 bullets on current state — what's delivered, what's pending, what's deferred | Bulleted list | See `CLAUDE.md` of a real project |
-| `{{PROJECT_SPECIFIC_GUARDRAILS}}` | Numbered list of guardrails unique to this engagement beyond the three generic ones. Can be empty if nothing project-specific. | Numbered list, or empty | See `CLAUDE.md` of a real project |
+| `{{INTERNAL_VOICE_NOTES}}` | A short **pointer** to the user's shared internal-voice reference, not the full voice text inline. Keeping the actual voice notes in one shared doc (rather than pasted into every project's `AGENTS.md`) means an update to the user's voice doesn't require editing N projects. Set the real value once in `config.local.md`. | Single line, a link/path | `See [`16wells/16wells-voice-guide`](https://github.com/16wells/16wells-voice-guide) (`~/Sites/references/16wells-voice-guide/voice-guide.md`).` |
+| `{{PROJECT_ONE_PARAGRAPH}}` | A dense paragraph describing what the project is, who it's for, why it matters. Should give a new agent enough to operate intelligently. | One long paragraph | See `AGENTS.md` of a real project |
+| `{{STABLE_FACTS_BULLETS}}` | 2–5 bullets of facts that rarely change: contract or ownership terms, key dates, where the kickoff notes live, the Linear project. Not live status; that goes in `01-context/state.md`, which `AGENTS.md` points to. | Bulleted list | See `AGENTS.md` of a real project |
+| `{{PROJECT_SPECIFIC_GUARDRAILS}}` | Numbered list of guardrails unique to this engagement beyond the three generic ones. Can be empty if nothing project-specific. | Numbered list, or empty | See `AGENTS.md` of a real project |
 | `{{SECOND_BRAIN_LINK}}` | Link or file path to the project note in the user's Second Brain / note system | URL or path, or "TBD" | `obsidian://open?vault=YourVault&file=projects%2Facme-futures` |
 | `{{LINEAR_PROJECT_LINK}}` | Link to the project in Linear if one exists | URL, or "none" | `https://linear.app/your-org/project/acme-futures` |
 | `{{PEOPLE_LINKS}}` | Links to any people-note files relevant to the project | List of links, or "none" | `[Morgan Chen](path/to/note)` |

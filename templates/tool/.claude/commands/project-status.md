@@ -4,7 +4,7 @@ description: Summarize the current state of this client project
 
 Give the user a concise status read on this client project. You must:
 
-1. Read `CLAUDE.md` to ground yourself in the project.
+1. Read `AGENTS.md` and `01-context/state.md` to ground yourself in the project.
 2. Read `01-context/decisions-log.md` and report:
    - Number of closed decisions
    - Any open decisions and why they're open
