@@ -38,9 +38,9 @@ If the file that was actually read (either `.local.md` or `.md`) is missing or a
 
 Detect mode from the argument or context:
 - "new [slug]" → greenfield
-- "retrofit [path]" or pointing at an existing folder without `state.md` → retrofit
-- "reconcile [path]", "the state file is out of date", "rebuild memory" → reconcile
-- Ambiguous → check whether the target path already exists, whether it has `state.md`, and ask the user to confirm before proceeding
+- "retrofit [path]", or any existing folder (with or without `state.md`) → retrofit. This is the default for an existing folder.
+- "reconcile [path]", "the state file is out of date", "rebuild memory" → reconcile (only when asked this explicitly)
+- No folder named → ask the user which folder before proceeding
 
 ## Step 2: Determine the project type
 
@@ -103,7 +103,7 @@ Also read `$TEMPLATE_ROOT/placeholder-map.md` — it documents every `{{TOKEN}}`
 4. Propose a draft understanding for the user to confirm before writing authoritative content.
 5. Show the user the plan before touching files.
 6. Create missing files and fill placeholders. Always create `01-context/state.md` and `01-context/insights.md`. Only create the optional context file (`marketing-context.md` / `domain-context.md`) if the project actually warrants it.
-7. Surgical additions to existing files — replace any old "Cross-Surface Continuity — Read This" section in `CLAUDE.md` with the new "Iterative Memory — Update As You Go" section, and ensure orientation table rows for `state.md`, `activity-log.md`, and `insights.md` exist.
+7. Surgical additions to existing files — replace any "Cross-Surface Continuity — Read This" section (session-end discipline) in the project's main instruction file (`CLAUDE.md`, or `AGENTS.md` when `CLAUDE.md` only points to it) with the "Iterative Memory — Update As You Go" section, and ensure orientation table rows for `state.md`, `activity-log.md`, and `insights.md` exist.
 8. Append a retrofit entry to `01-context/activity-log.md` listing exactly what was added.
 9. Refresh `state.md` so it reflects the current commit and any in-flight work the agent could glean from the existing folder.
 10. Report back.
