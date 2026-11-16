@@ -39,7 +39,7 @@ All three share the same `01-context/` → `02-deliverables/` → `03-assets/` �
 ## How It Works in 30 Seconds
 
 1. Clone this repo. Edit `config.md` (or create `config.local.md`) to point at where you want your client / internal-product / tool folders created.
-2. Run `/project-setup` in Claude Code (or describe the situation to Cowork/Chat). The command asks **which template type** (client / internal-product / tool), then scaffolds the right folder, populated with what you know, seeded with a `CLAUDE.md` that orients any future agent.
+2. Run `/project-setup` in Claude Code (or describe the situation to Cowork/Chat). The command asks **which template type** (client / internal-product / tool), then scaffolds the right folder, populated with what you know, seeded with an `AGENTS.md` that orients any future agent.
 3. Work the project from any Claude surface. At the start of each session, the agent reads `AGENTS.md`, `state.md`, the last few `activity-log.md` entries, and the open rows in `decisions-log.md`. As the work happens, it updates those files iteratively (not at session-end).
 4. Months later, opening the folder from any surface, the agent knows exactly where things stand.
 
