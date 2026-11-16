@@ -91,7 +91,7 @@ A few principles for how to actually do the work. Drawn from Andrej Karpathy's g
 {{PRINCIPAL_USER_FIRST}} works across multiple Claude surfaces: Claude.ai chats, Cowork on the desktop, Claude Code in the terminal, and Cursor in the editor. Each surface is effectively a separate conversation with no shared memory. The project folder is how those surfaces stay in sync — but only if it actually reflects reality. Memory upkeep is part of the work, not a chore at the end of it.
 
 **Resume discipline — at session start, read in this order:**
-1. This file (`CLAUDE.md`) for project orientation.
+1. This file (`AGENTS.md`) for project orientation.
 2. `01-context/state.md` for what is happening *right now*.
 3. The most recent 5 entries in `01-context/activity-log.md` for chronology.
 4. Open items in `01-context/decisions-log.md`.
@@ -114,7 +114,7 @@ If `state.md` is current, the chat history should be irrelevant to resumption.
 
 **Visibility.** When you update a memory file, say so out loud: "Logged decision X to decisions-log.md," "Refreshed state.md to reflect the deployed Lambda." This makes the discipline observable — {{PRINCIPAL_USER_FIRST}} can see when it's slipping and prompt you.
 
-**If your context gets compacted mid-session:** re-read `CLAUDE.md`, `01-context/state.md`, and the most recent activity-log entry before continuing. Compaction is a mini session-start.
+**If your context gets compacted mid-session:** re-read `AGENTS.md`, `01-context/state.md`, and the most recent activity-log entry before continuing. Compaction is a mini session-start.
 
 **The mental model:** `state.md` is the live dashboard. `activity-log.md` is the chronological journal. `decisions-log.md` is the ledger. `insights.md` is the working-memory scratchpad. Between the four, no Claude agent should ever need {{PRINCIPAL_USER_FIRST}} to re-explain context that was already established.
 

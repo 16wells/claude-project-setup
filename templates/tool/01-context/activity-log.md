@@ -27,7 +27,7 @@
 
 ### {{LAST_UPDATED}} — Cowork — Project setup
 - Scaffolded the project folder from `$TEMPLATE_ROOT/templates/tool/`
-- Filled placeholder tokens in `CLAUDE.md`, `README.md`, `01-context/*`
+- Filled placeholder tokens in `AGENTS.md`, `README.md`, `01-context/*`
 - **In progress:** _(nothing yet)_
 - **Queued:** First working session
 

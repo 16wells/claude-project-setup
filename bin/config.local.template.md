@@ -34,7 +34,7 @@ Agents read this file **first**. If it exists, use it and ignore `config.md`. If
 
 ## Principal User Identity (optional — fill in if you want personalized defaults)
 
-When scaffolding a new project, these values become defaults for the corresponding CLAUDE.md placeholders. Leave the `TODO:` text if you'd rather be prompted per-project.
+When scaffolding a new project, these values become defaults for the corresponding AGENTS.md placeholders. Leave the `TODO:` text if you'd rather be prompted per-project.
 
 | Placeholder | Value |
 |---|---|

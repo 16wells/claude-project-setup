@@ -74,7 +74,7 @@ Additional helpful context (ask if relevant):
 - Domain / category and any non-trivial domain context (regulator constraints, ecosystem norms)
 - Project-specific guardrails the user wants the agent to respect
 
-In retrofit mode, some of these may already be answered in files like `CLAUDE.md`, `README.md`, or any pitch/spec docs in the folder. Read first, ask only for the gaps.
+In retrofit mode, some of these may already be answered in files like `AGENTS.md`, `CLAUDE.md`, `README.md`, or any pitch/spec docs in the folder. Read first, ask only for the gaps.
 
 ## The Placeholder Map
 
@@ -111,7 +111,7 @@ Use `AskUserQuestion` where needed. Collect answers for every required placehold
 
 Use `Edit` with `replace_all: true` for each token, one file at a time:
 
-- `CLAUDE.md`
+- `AGENTS.md`
 - `README.md`
 - `01-context/product-charter.md`
 - `01-context/project-scope.md`
@@ -168,7 +168,7 @@ Wait for the user's review before declaring complete.
 Compare the existing folder to the template structure. Produce an inventory of:
 
 - **Files that exist in the template but not in this folder** → candidates to create
-- **Files that exist in both** → candidates for surgical addition (e.g., adding the "Iterative Memory — Update As You Go" section to an existing CLAUDE.md or AGENTS.md) but never overwrite
+- **Files that exist in both** → candidates for surgical addition (e.g., adding the "Iterative Memory — Update As You Go" section to an existing `AGENTS.md`, or a `CLAUDE.md` that still carries the guide) but never overwrite
 - **Subfolders missing** → `03-assets/{copy,photos,brand}/`, `04-research/competitors/`, `05-build/wireframes/`, `.claude/commands/`, `.claude/rules/`, `.claude/skills/project-setup/`, `.cursor/rules/`
 - **Files that exist here but not in the template** → leave alone, note them
 
@@ -182,7 +182,7 @@ Compare the existing folder to the template structure. Produce an inventory of:
 Retrofit is different from greenfield because the answers to most prerequisite questions are *already somewhere* — the folder, the user's other tools, or public sources. Your job is to find them, not ask. Work this hierarchy top-down, only dropping to the next tier when the current one is exhausted:
 
 **Tier 1 — Inside the folder itself (always check first):**
-- `CLAUDE.md` or `README.md` at folder root — often has product one-liner, current status
+- `AGENTS.md`, `CLAUDE.md` or `README.md` at folder root — often has product one-liner, current status
 - `01-context/product-charter.md` — product identity, buyer, why-we're-building, success criteria
 - `01-context/project-scope.md` — what's being built, timeline, tech stack
 - `01-context/decisions-log.md` — what's been settled, what's open
@@ -211,9 +211,9 @@ Only ask the user about something after Tiers 1–3 have been checked and came u
 
 ### Step 3: Propose a draft understanding for the user to confirm
 
-Before writing anything authoritative into `CLAUDE.md` or the `01-context/` files, produce a short "here's what I think I know" summary for the user. Include:
+Before writing anything authoritative into `AGENTS.md` or the `01-context/` files, produce a short "here's what I think I know" summary for the user. Include:
 
-- The one-paragraph project description you'd put in `CLAUDE.md`
+- The one-paragraph project description you'd put in `AGENTS.md`
 - Current status bullets as you understand them
 - Any project-specific guardrails you inferred
 - A list of gaps where you're still guessing, and what you'd put in each
@@ -244,7 +244,7 @@ For the missing `.claude/` setup, copy over `.claude/commands/` (including `chec
 
 ### Step 6: Surgical additions to existing files
 
-**For the existing main instruction file** (`CLAUDE.md`, or `AGENTS.md` when `CLAUDE.md` only points to it):
+**For the existing main instruction file** (`AGENTS.md`). If only `CLAUDE.md` exists and it carries the project guide (more than a short pointer), first move its content to `AGENTS.md` unchanged, then replace `CLAUDE.md` with the template stub (an `@AGENTS.md` import plus one line for other agents). If `CLAUDE.md` is already a stub, leave it. Then, in `AGENTS.md`:
 - If it has a "Cross-Surface Continuity — Read This" section (session-end-discipline language), replace it with the "Iterative Memory — Update As You Go" section from the template. Leave everything else in that file alone.
 - If it has neither section, insert the "Iterative Memory — Update As You Go" section after the "How to Get Oriented on Specific Topics" table and before "Voice and Tone for Any Content You Draft."
 - Check whether the orientation table has rows for `state.md`, `activity-log.md`, and `insights.md`. Add any that are missing.
@@ -261,7 +261,7 @@ For the missing `.claude/` setup, copy over `.claude/commands/` (including `chec
 
 ### Step 7: Seed the activity log with a retrofit entry
 
-Append an entry to `01-context/activity-log.md` that lists exactly what was added. Format per the template already in that file. Be specific: "Added state.md, added iterative-memory rule files, replaced Cross-Surface Continuity section in CLAUDE.md with Iterative Memory section, created /checkpoint command" — not "retrofitted to template."
+Append an entry to `01-context/activity-log.md` that lists exactly what was added. Format per the template already in that file. Be specific: "Added state.md, added iterative-memory rule files, replaced Cross-Surface Continuity section in AGENTS.md with Iterative Memory section, moved the guide from CLAUDE.md to AGENTS.md and left a stub, created /checkpoint command" — not "retrofitted to template."
 
 ### Step 8: Refresh `state.md`
 
@@ -362,9 +362,9 @@ git push
 
 ## Guardrails (all modes)
 
-1. **Never overwrite existing content without asking.** In greenfield, don't copy over an existing folder. In retrofit, only add — never replace (except for the explicit Cross-Surface-Continuity-to-Iterative-Memory swap in CLAUDE.md, which is the documented surgical update). In reconcile, propose then apply.
+1. **Never overwrite existing content without asking.** In greenfield, don't copy over an existing folder. In retrofit, only add — never replace (except for the explicit Cross-Surface-Continuity-to-Iterative-Memory swap in AGENTS.md and the CLAUDE.md-to-AGENTS.md move with a stub, which are the documented surgical updates). In reconcile, propose then apply.
 2. **Never invent product-specific facts.** If you don't know something, leave a `TODO:` with a question. The user will fill it.
-3. **Respect the user's brand conventions.** If the user has a specific way their practice name should appear (capitalization, spacing, no suffix, etc.), follow it. Defer to any CLAUDE.md conventions already set in their existing projects.
+3. **Respect the user's brand conventions.** If the user has a specific way their practice name should appear (capitalization, spacing, no suffix, etc.), follow it. Defer to any AGENTS.md (or CLAUDE.md) conventions already set in their existing projects.
 4. **Don't guess the tech stack.** Platform/framework choices are often deferred. Keep them in the Open Decisions table, not the Closed one.
 5. **Don't impose checkpoint discipline on subagents mid-flight.** If you spawn a subagent, let it work to its natural pause point (the next "report back to parent") and flush memory then — not in the middle of its run.
 
@@ -384,7 +384,7 @@ git push
 - `state.md` reflects current reality (commits, in-flight work, deployed resources, awaiting-decision items)
 - Contradictions in other memory files are resolved or explicitly flagged for the user
 - The reconcile pass has been committed and pushed
-- The user can read just `CLAUDE.md` + `state.md` and resume work without needing chat history
+- The user can read just `AGENTS.md` + `state.md` and resume work without needing chat history
 
 ## Fallback: Manual Fill
 
