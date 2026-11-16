@@ -14,7 +14,9 @@
 
 ## Current Status
 
-{{CURRENT_STATUS_BULLETS}}
+Live status (in-flight work, open questions, what is connected) is in `01-context/state.md`; read it rather than relying on this file. Stable facts:
+
+{{STABLE_FACTS_BULLETS}}
 
 ## Your Role as a Generalist Coordinator
 
@@ -64,12 +66,6 @@ A few principles for how to actually do the work. Drawn from Andrej Karpathy's g
 - For multi-phase build/migration scripts, scan for credential/secret leaks BEFORE committing, and never commit files from archive paths without explicit review.
 - Before any phase of a multi-phase migration commits, spawn a review subagent to: (1) list every file staged for commit, (2) flag any path under `/archive`, `/legacy`, or `/tmp`, (3) scan for credential patterns, (4) report findings before proceeding.
 
-## Project Setup Workflow
-
-- When `/project-setup` is invoked on an existing folder, default to retrofit mode: mine existing artifacts, propose a plan, get approval, then populate template files. Never leave unfilled placeholders.
-- Always confirm the target folder location BEFORE creating scaffolding to avoid relocation work.
-- After completing a `/project-setup` retrofit, do a verification pass: grep all generated files for unfilled placeholder patterns (`{{.*}}`, `TODO`, `TBD`, `[FILL IN]`), report any found, and confirm every context file has substantive content sourced from existing artifacts.
-
 ## How to Get Oriented on Specific Topics
 
 | If you need to know... | Read this |
@@ -98,7 +94,7 @@ A few principles for how to actually do the work. Drawn from Andrej Karpathy's g
 
 If `state.md` is current, the chat history should be irrelevant to resumption.
 
-**Checkpoint triggers — update the appropriate file IMMEDIATELY when:**
+**Checkpoint triggers: update the matching file as part of the step when:**
 
 | Event | Update |
 |---|---|
@@ -133,6 +129,3 @@ If `state.md` is current, the chat history should be irrelevant to resumption.
 ## When You're Unsure
 
 Ask {{PRINCIPAL_USER_FIRST}}. {{PRINCIPAL_USER_PRONOUN_CAP}} would rather answer a clarifying question up front than clean up an assumption later. Default toward explicitness over guessing.
-
----
-*Last updated: {{LAST_UPDATED}}. If this file is more than a few weeks old and the project has moved, assume it may be stale and check with {{PRINCIPAL_USER_FIRST}}.*
