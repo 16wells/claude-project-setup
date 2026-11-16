@@ -31,15 +31,23 @@ One concise entry covering everything since the last activity-log entry. Format 
 
 ## Step 4 — Stage, commit, push
 
+Run `git status --short` and stage by name: the memory files you just wrote, plus any other changes from this session's work. Leave everything else unstaged — untracked folders you didn't create, other tools' config, scratch files, and anything under `archive/`, `legacy/`, `tmp/` or backup paths. If a change you didn't make looks like it belongs in the commit, ask instead of guessing.
+
 ```bash
-git add -A
+git add <files>
+git diff --cached --stat
+```
+
+Before committing, scan the staged diff for credentials or secrets, and show the staged file list in your report. Then:
+
+```bash
 git commit -m "checkpoint: <short topic>"
 git push
 ```
 
 Use the user-provided topic from `$ARGUMENTS` if given; otherwise summarize the activity-log entry in 6–10 words.
 
-If the working tree is clean (nothing to commit), say so and skip the commit/push.
+If nothing needs committing, say so and skip the commit/push. Mention any untracked files you left out so the user can decide about them.
 
 ## Step 5 — Report back
 
