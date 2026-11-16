@@ -50,9 +50,9 @@ Before doing anything, determine mode. Ask yourself:
 **Decision tree:**
 
 - **No folder exists → greenfield.**
-- **Folder exists, missing template files → retrofit.**
-- **Folder exists, conforms to template, but `state.md` is stale or the user asks to rebuild memory → reconcile.**
-- **Ambiguous → ask the user explicitly.**
+- **Folder exists → retrofit.** This is the default for any existing folder, whether or not it already conforms to the template.
+- **The user explicitly asks to reconcile or rebuild memory → reconcile.** (Retrofit's memory-drift check can still offer reconcile; switch only if the user agrees.)
+- **No target folder identified → ask the user which folder.**
 
 ## Prerequisites (greenfield + retrofit)
 
@@ -168,7 +168,7 @@ Wait for the user's review before declaring complete.
 Compare the existing folder to the template structure. Produce an inventory of:
 
 - **Files that exist in the template but not in this folder** → candidates to create
-- **Files that exist in both** → candidates for surgical addition (e.g., adding the new "Iterative Memory — Update As You Go" section to an existing CLAUDE.md) but never overwrite
+- **Files that exist in both** → candidates for surgical addition (e.g., adding the "Iterative Memory — Update As You Go" section to an existing CLAUDE.md or AGENTS.md) but never overwrite
 - **Subfolders missing** → `03-assets/{copy,photos,brand}/`, `04-research/competitors/`, `05-build/wireframes/`, `.claude/commands/`, `.claude/rules/`, `.claude/skills/project-setup/`, `.cursor/rules/`
 - **Files that exist here but not in the template** → leave alone, note them
 
@@ -233,8 +233,8 @@ Wait for the user's confirmation before proceeding.
 
 For each missing file, copy from the template and then fill placeholders using the understanding the user confirmed in Step 3. Leave `TODO:` markers only for things that remained genuinely unknown after Tiers 1–4 and the draft-understanding review.
 
-**About the new and contextual files:**
-- `01-context/state.md` — **always create if missing.** This is the central piece of the iterative-memory upgrade. If you can build a real state from existing artifacts (recent commits, last few activity-log entries, contents of an active `02-deliverables/{slug}/` subfolder), do — that's effectively a reconcile pass folded into the retrofit. If nothing's in flight, leave the sections empty with headers in place.
+**About the memory and contextual files:**
+- `01-context/state.md` — **always create if missing.** This is the central piece of the iterative-memory model. If you can build a real state from existing artifacts (recent commits, last few activity-log entries, contents of an active `02-deliverables/{slug}/` subfolder), do — that's effectively a reconcile pass folded into the retrofit. If nothing's in flight, leave the sections empty with headers in place.
 - `01-context/insights.md` — always create if missing. Fill the `{{PROJECT_DISPLAY_NAME}}` and `{{LAST_UPDATED}}` tokens. Seed `{{INITIAL_INSIGHTS}}` with any observations you gathered from Tier 1 mining. If nothing surfaced, leave it empty.
 - `01-context/domain-context.md` — only create if the product sits in a domain with non-trivial external context (regulator constraints, competitive landscape, industry conventions). If the product is purely tooling-focused with no meaningful external context, do not create this file in retrofit. Ask the user if it's ambiguous.
 
@@ -244,9 +244,9 @@ For the missing `.claude/` setup, copy over `.claude/commands/` (including `chec
 
 ### Step 6: Surgical additions to existing files
 
-**For an existing `CLAUDE.md`:**
-- If it has the old "Cross-Surface Continuity — Read This" section (session-end-discipline language), replace it with the new "Iterative Memory — Update As You Go" section from the template. Leave everything else in CLAUDE.md alone.
-- If it has neither section, insert the new "Iterative Memory — Update As You Go" section after the "How to Get Oriented on Specific Topics" table and before "Voice and Tone for Any Content You Draft."
+**For the existing main instruction file** (`CLAUDE.md`, or `AGENTS.md` when `CLAUDE.md` only points to it):
+- If it has a "Cross-Surface Continuity — Read This" section (session-end-discipline language), replace it with the "Iterative Memory — Update As You Go" section from the template. Leave everything else in that file alone.
+- If it has neither section, insert the "Iterative Memory — Update As You Go" section after the "How to Get Oriented on Specific Topics" table and before "Voice and Tone for Any Content You Draft."
 - Check whether the orientation table has rows for `state.md`, `activity-log.md`, and `insights.md`. Add any that are missing.
 - Do not modify any other content.
 
