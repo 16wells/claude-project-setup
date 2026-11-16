@@ -38,9 +38,12 @@ If the file that was actually read (either `.local.md` or `.md`) is missing or a
 
 Detect mode from the argument or context:
 - "new [slug]" → greenfield
-- "retrofit [path]", or any existing folder (with or without `state.md`) → retrofit. This is the default for an existing folder.
-- "reconcile [path]", "the state file is out of date", "rebuild memory" → reconcile (only when asked this explicitly)
+- "retrofit [path]", or an existing folder that is missing template pieces → retrofit
+- "reconcile [path]", "the state file is out of date", "rebuild memory", or an existing folder that already conforms to the template but has a stale `state.md` → reconcile
+- An existing folder where it isn't clear which of the two applies → ask the user. Don't default to retrofit.
 - No folder named → ask the user which folder before proceeding
+
+**In every mode, confirm the target folder with the user before creating or changing anything.**
 
 ## Step 2: Determine the project type
 
@@ -125,7 +128,8 @@ This is the "fix me up after a thread loss" tool. Use it when the file system ha
 ## Step 7: What "done" looks like
 
 **Greenfield + retrofit:**
-- No `{{PLACEHOLDER}}` tokens remain in key files (except `TODO:` markers the user will fill later)
+- No `{{PLACEHOLDER}}` tokens or `[FILL IN]` / `TBD` markers remain. A deliberate `TODO: [question]` stays for a fact the existing material doesn't contain; never invent one. Grep the generated files for these patterns, and list every `TODO` in the report.
+- Thin starters are fine: `state.md` can be headers only and `insights.md` can be empty. Fill the other context files only from real material.
 - `01-context/state.md` exists with headers in place (or, in retrofit, reflects current reality)
 - The activity log has a starting or retrofit entry
 - The decisions log has something real in it

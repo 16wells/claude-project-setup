@@ -2,6 +2,12 @@
 
 All notable changes to this template system.
 
+## Unreleased
+
+- **AGENTS.md is the single project guide.** Each template ships `AGENTS.md` (the old `CLAUDE.md` content) plus a `CLAUDE.md` stub that imports it with `@AGENTS.md`. `.claude/rules/iterative-memory.md` is a pointer to the guide's "Iterative Memory" section. Retrofit converts an old content-bearing `CLAUDE.md` into `AGENTS.md` plus the stub.
+- **Template AGENTS.md trimmed.** Current Status points to `01-context/state.md` and holds stable facts only (`{{CURRENT_STATUS_BULLETS}}` is now `{{STABLE_FACTS_BULLETS}}`); no "Last updated" footer; no `/project-setup` section; checkpoint triggers in plain wording.
+- **`/project-setup` rules:** on an existing folder it picks retrofit or reconcile from what is there and asks when unclear; `TODO: [question]` markers are allowed for unknown facts and listed in the report; thin starter files are fine; the target folder is confirmed in every mode.
+
 ## 0.1.0 — Initial public release
 
 The repo is a template system for Claude-assisted client engagement folders that stay in sync across Claude surfaces (Claude.ai chats, Cowork, Claude Code). This is the first public release.

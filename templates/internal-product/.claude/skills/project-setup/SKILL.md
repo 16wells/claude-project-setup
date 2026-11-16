@@ -50,9 +50,12 @@ Before doing anything, determine mode. Ask yourself:
 **Decision tree:**
 
 - **No folder exists → greenfield.**
-- **Folder exists → retrofit.** This is the default for any existing folder, whether or not it already conforms to the template.
-- **The user explicitly asks to reconcile or rebuild memory → reconcile.** (Retrofit's memory-drift check can still offer reconcile; switch only if the user agrees.)
+- **Folder exists, missing template files → retrofit.**
+- **Folder exists, already conforms to the template, but `state.md` is stale or the user asks to rebuild memory → reconcile.**
+- **Not clear which of the two applies → ask the user. Don't default to retrofit.** (Retrofit's memory-drift check can still offer reconcile; switch only if the user agrees.)
 - **No target folder identified → ask the user which folder.**
+
+**In every mode, confirm the target folder with the user before creating or changing anything.**
 
 ## Prerequisites (greenfield + retrofit)
 
@@ -372,7 +375,8 @@ git push
 
 **Greenfield + retrofit complete when:**
 - The target folder exists and has the full template structure including `01-context/state.md`, `.claude/rules/iterative-memory.md`, `.cursor/rules/iterative-memory.mdc`, and `.claude/commands/checkpoint.md`
-- No unexpected `{{PLACEHOLDER}}` tokens remain (except `TODO:` markers the user will fill)
+- No `{{PLACEHOLDER}}` tokens or `[FILL IN]` / `TBD` markers remain; grep the generated files for them. A deliberate `TODO: [question]` may stay for facts the existing material doesn't contain, and every `TODO` is listed in the report
+- Thin starters are fine: `state.md` can be headers only and `insights.md` can be empty; the other context files are filled only from real material, never padded
 - The decisions log has at least a few real rows
 - The activity log has a starting or retrofit entry
 - `01-context/state.md` exists and reflects current reality (or, if greenfield, has empty sections with headers)
